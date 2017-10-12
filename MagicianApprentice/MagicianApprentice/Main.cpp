@@ -4,10 +4,19 @@
 #include <conio.h>
 #include "Utils.h"
 #include "world.h"
+#include <windows.h>
+#include "Defines.h"
+
 using namespace std;
 
 
 int main() {
+	//Open console with 1024*768
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+
+	MoveWindow(console, r.left, r.top, W_WIDTH, W_HEIGTH, TRUE);
 
 	while (1) {
 		char key;
@@ -16,11 +25,12 @@ int main() {
 		args.reserve(10);
 
 		cout << "Welcome to Magician Apprentice!\n";
-		cout << "----------------\n\n";
-		cout << "> ";
-
+		cout << "-------------------------------\n\n";
+		
 		World my_world;
 		my_world.Init();
+
+		args.push_back("look");
 
 		while (1)
 		{
@@ -42,8 +52,10 @@ int main() {
 					player_input += key;
 					cout << key;
 				}
-				else
+				else {
+					cout << "\n";
 					ParseInput(player_input, args);
+				}					
 			}
 
 			if (args.size() > 0 && args[0] == "quit")
@@ -52,7 +64,7 @@ int main() {
 			if (args.size() > 0)
 			{
 				if (my_world.ReadComand(args) == false)
-					cout << "\nSorry, I do not understand your command.\n";
+					cout << "Sorry, I do not understand your command.\n";
 
 				args.clear();
 				player_input = "";

@@ -25,6 +25,8 @@ public:
 	void GameLoop();
 
 private:
+	string Introduction();
+private:
 
 	int i = 0;
 	list<Entity*> entities;
