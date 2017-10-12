@@ -16,9 +16,9 @@ bool World::Init() {
 
 	//Init Rooms
 	Room *forest = new Room("The forest", "You are in the forest, you can see the old castle far at the east of this path.");
-
+	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.\n The forest stay at the west.");
 	entities.push_back(forest);
-
+	entities.push_back(bridge);
 	//Player creation
 	string name = Introduction().c_str();
 	player = new Player(name.c_str(), "You are a magician apprentice", forest);

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Utils.h"
 #include "Entity.h"
+#include "Defines.h"
 
 // ----------------------------------------------------
 Entity::Entity(const char* name, const char* description, Entity* parent = nullptr) :
@@ -17,7 +18,7 @@ Entity::~Entity()
 
 void Entity::Look() const
 {
-	cout << name << "\n";
+	cout << S_BOLD << name << E_BOLD << "\n";
 	cout << description << "\n";
 }
 
