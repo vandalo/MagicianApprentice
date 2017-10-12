@@ -8,7 +8,8 @@ using namespace std;
 
 enum EntityType
 {
-	ENTITY
+	ENTITY,
+	ROOM
 };
 
 class Entity
@@ -29,4 +30,4 @@ public:
 	list<Entity*> container;
 };
 
-#endif //__Entity__
+#endif

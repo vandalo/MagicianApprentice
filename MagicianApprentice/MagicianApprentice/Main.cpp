@@ -16,8 +16,9 @@ int main() {
 		args.reserve(10);
 
 		cout << "Welcome to Magician Apprentice!\n";
-		cout << "----------------\n";
-		
+		cout << "----------------\n\n";
+		cout << "> ";
+
 		World my_world;
 		my_world.Init();
 

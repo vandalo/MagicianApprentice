@@ -3,6 +3,7 @@
 #include "world.h"
 #include "Defines.h"
 #include "Entity.h"
+#include "Room.h"
 
 World::World()
 {
@@ -11,6 +12,11 @@ World::World()
 
 bool World::Init() {
 	clock_t timer = clock();
+
+	//Init Rooms
+	Room *forest = new Room("The forest", "You are in the forest, you can see the old castle far at the east of this path.");
+
+	entities.push_back(forest);
 	return true;
 }
 
@@ -55,6 +61,10 @@ bool World::ParseCommand(vector<string>& args)
 
 	switch (args.size())
 	{
+	case 1:
+		if (Same(args[0], "look")) {
+
+		}
 	default:
 		break;
 	}
