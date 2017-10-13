@@ -75,6 +75,17 @@ Room* Player::GetRoom() const
 	return (Room*)parent;
 }
 
+void Player::Inventory(const vector<string>& args) const
+{
+	list<Entity*> items;
+	FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	{
+		(*it)->Look();
+	}
+}
+
 void Player::Go(const vector<string>& args)
 {
 	Exit* exit = GetRoom()->GetExitByName(args[1]);

@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "Player.h"
 #include "Exit.h"
+#include "Item.h"
 
 World::World()
 {
@@ -30,6 +31,14 @@ bool World::Init() {
 	//Player creation
 	string name = Introduction().c_str();
 	player = new Player(name.c_str(), "You are a magician apprentice", forest);
+
+	//Items from player since start
+	Item *document = new Item("Document", "Mission:\nYou blabla", player);
+	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player);
+	Item *sbPage1 = new Item("Ignite", "This spell throws a flame to the enemy.\nIt costs 20 mana points and hurt 10 damage.\nIt have 10 seconds of cooldown", spellbook);
+	entities.push_back(document);
+	entities.push_back(spellbook);
+	entities.push_back(sbPage1);
 
 	return true;
 }
@@ -92,11 +101,18 @@ bool World::ParseCommand(vector<string>& args)
 			args[0] = "go";
 			player->Go(args);
 		}
+		else if (Same(args[0], "inventory")){
+			player->Inventory(args);
+		}
 		break;
 	case 2:
 		if (Same(args[0], "go"))
 		{
 			player->Go(args);
+		}
+		else if (Same(args[0], "look"))
+		{
+			player->Look(args);
 		}
 		break;
 	default:

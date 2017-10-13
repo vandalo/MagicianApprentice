@@ -36,3 +36,23 @@ void Entity::ChangeParentTo(Entity* new_parent)
 
 void Entity::Update()
 {}
+
+void Entity::FindByTypeAndPropietary(EntityType type, list<Entity*>& entity_list, const Entity* propietari) const
+{
+	string propietari_name = propietari->name;
+	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+	{
+		if ((*it)->type == type)
+		{
+			if (propietari = nullptr)
+			{
+				entity_list.push_back(*it);
+			}
+			else if(Same(propietari_name, (*it)->parent->name))
+			{
+				entity_list.push_back(*it);
+			}
+		}
+		
+	}
+}

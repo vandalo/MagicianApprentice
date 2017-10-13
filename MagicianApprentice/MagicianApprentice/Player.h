@@ -20,6 +20,7 @@ public:
 	void Stats(const vector<string>& args) const;
 	void Go(const vector<string>& args);
 	Room* GetRoom() const;
+	void Inventory(const vector<string>& args) const;
 
 private:
 	unsigned int lvl = 0;
