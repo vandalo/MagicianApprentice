@@ -5,6 +5,8 @@
 #include <list>
 #include "entity.h"
 
+class Room;
+
 using namespace std;
 
 
@@ -16,6 +18,8 @@ public:
 
 	void Look(const vector<string>& args) const;
 	void Stats(const vector<string>& args) const;
+	void Go(const vector<string>& args);
+	Room* GetRoom() const;
 
 private:
 	unsigned int lvl = 0;

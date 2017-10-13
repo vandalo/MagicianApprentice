@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Room.h"
 #include "Player.h"
+#include "Exit.h"
 
 World::World()
 {
@@ -15,10 +16,17 @@ bool World::Init() {
 	clock_t timer = clock();
 
 	//Init Rooms
-	Room *forest = new Room("The forest", "You are in the forest, you can see the old castle far at the east of this path.");
-	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.\n The forest stay at the west.");
+	Room *forest = new Room("The forest", "You are in the forest.");
+	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.\nThe forest stay at the west.");
+
+	//Exits
+	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, false);
+	Exit *bridgeToForest = new Exit("west", "This is a sandy road which arrives until the forest", "bridge", bridge, forest, false, false);
+
 	entities.push_back(forest);
 	entities.push_back(bridge);
+	entities.push_back(forestToBridge);
+	entities.push_back(bridgeToForest);
 	//Player creation
 	string name = Introduction().c_str();
 	player = new Player(name.c_str(), "You are a magician apprentice", forest);
@@ -65,16 +73,35 @@ bool World::ParseCommand(vector<string>& args)
 {
 	bool ret = true;
 
-
-	if (Same(args[0], "look"))
-	{
-		player->Look(args);
+	switch (args.size()) {
+	case 1:
+		if (Same(args[0], "look"))
+		{
+			player->Look(args);
+		}
+		else if (Same(args[0], "stats"))
+		{
+			player->Stats(args);
+		}
+		else if (Same(args[0], "go"))
+		{
+			cout << "You must say where you want to go.\n";
+		}
+		else if (Same(args[0], "east") || Same(args[0], "west") || Same(args[0], "north") || Same(args[0], "south")) {
+			args.push_back(args[0]);
+			args[0] = "go";
+			player->Go(args);
+		}
+		break;
+	case 2:
+		if (Same(args[0], "go"))
+		{
+			player->Go(args);
+		}
+		break;
+	default:
+		cout << "Sorry, I don't understand this action.\n";
 	}
-	else if(Same(args[0], "stats"))
-	{
-		player->Stats(args);
-	}
-
 	return ret;
 }
 

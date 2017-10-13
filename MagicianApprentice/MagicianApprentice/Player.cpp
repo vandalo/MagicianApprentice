@@ -1,8 +1,9 @@
 #include <iostream>
 #include "Utils.h"
 #include "Player.h"
+#include "Exit.h"
+#include "Room.h"
 
-// ----------------------------------------------------
 Player::Player(const char* name, const char* description, Entity* parent) :
 	Entity(name, description, parent)
 {
@@ -49,9 +50,9 @@ void Player::Look(const vector<string>& args) const
 void Player::Stats(const vector<string>& args) const
 {
 	int lifePercent = hp * 100 / maxHp;
-	
+
 	cout << "You are level " << lvl << endl;
-	
+
 	if (lifePercent > 75)
 	{
 		cout << "You are healthy, ";
@@ -67,7 +68,25 @@ void Player::Stats(const vector<string>& args) const
 
 	cout << "you have " << hp << "/" << maxHp << " hit points" << endl;
 	cout << "You have " << mana << " mana points" << endl;
-	
-	
-	
 }
+
+Room* Player::GetRoom() const
+{
+	return (Room*)parent;
+}
+
+void Player::Go(const vector<string>& args)
+{
+	Exit* exit = GetRoom()->GetExitByName(args[1]);
+	if (exit == nullptr) 
+	{
+		cout << "There aren't anything on " + (args[1]) + ".\n";
+	}
+	else
+	{
+		ChangeParentTo(exit->GetDestinationByRoom(GetRoom()));
+		parent->Look();
+	}
+}
+
+

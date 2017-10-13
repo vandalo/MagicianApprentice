@@ -10,7 +10,8 @@ enum EntityType
 {
 	ENTITY,
 	ROOM,
-	PLAYER
+	PLAYER,
+	EXIT
 };
 
 class Entity
@@ -20,6 +21,7 @@ public:
 	virtual ~Entity();
 
 	virtual void Look() const;
+	virtual void ChangeParentTo(Entity* new_parent);
 	virtual void Update();
 
 public:

@@ -22,5 +22,17 @@ void Entity::Look() const
 	cout << description << "\n";
 }
 
+void Entity::ChangeParentTo(Entity* new_parent)
+{
+	if (parent != NULL)
+		parent->container.remove(this);
+
+	parent = new_parent;
+
+	if (parent != NULL)
+		parent->container.push_back(this);
+}
+
+
 void Entity::Update()
 {}
