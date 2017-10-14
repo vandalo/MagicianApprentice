@@ -5,9 +5,6 @@
 #include <list>
 #include "Entity.h"
 
-
-using namespace std;
-
 class Room;
 
 class Exit : public Entity

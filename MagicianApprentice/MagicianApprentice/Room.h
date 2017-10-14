@@ -5,9 +5,8 @@
 #include <list>
 #include "entity.h"
 
-using namespace std;
-
 class Exit;
+class Item;
 
 class Room : public Entity
 {
@@ -17,6 +16,8 @@ public:
 
 	void Look() const;
 	Exit* GetExitByName(const string exit_name);
+	//Entity* GetItemByName(const string item_name);
+	
 
 
 public:

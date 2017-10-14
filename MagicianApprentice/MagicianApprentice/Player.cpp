@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Exit.h"
 #include "Room.h"
+#include "Item.h"
+#include <string>
 
 Player::Player(const char* name, const char* description, Entity* parent) :
 	Entity(name, description, parent)
@@ -27,6 +29,15 @@ void Player::Look(const vector<string>& args) const
 	if (args.size() > 1)
 	{
 		for (list<Entity*>::const_iterator it = parent->container.begin(); it != parent->container.cend(); ++it)
+		{
+			if (Same((*it)->name, args[1]))
+			{
+				(*it)->Look();
+				return;
+			}
+		}
+
+		for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 		{
 			if (Same((*it)->name, args[1]))
 			{
@@ -100,4 +111,45 @@ void Player::Go(const vector<string>& args)
 	}
 }
 
+void Player::Take(const vector<string>& args)
+{	
+	Item* item = (Item*)GetItemByName(args[1]);
 
+	if (item != nullptr)
+	{
+		cout << "You already have " + item->name + ".\n";
+	}
+	else
+	{
+		item = (Item*)GetRoom()->GetItemByName(args[1]);
+		if (item == nullptr)
+		{
+			cout << "There aren't any item called " + (args[1]) + ".\n";
+		}
+		else if (item->fixed)
+		{
+			cout << "You can't take " + (args[1]) + ".\n";
+		}
+		else
+		{
+			if (item->must == nullptr)
+			{
+				item->ChangeParentTo(this);
+				cout << "You added the page to your inventory.\n";
+			}
+			else
+			{
+				list<Entity*> items;
+				FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+				for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+				{
+					if ((*it)->name == item->must->name)
+					{
+						item->ChangeParentTo(*it);
+						cout << "You added the page to your " + (*it)->name + ".\n";
+					}
+				}
+			}
+		}
+	}
+}

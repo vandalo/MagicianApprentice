@@ -9,39 +9,7 @@
 #include "Item.h"
 
 World::World()
-{
-
-}
-
-bool World::Init() {
-	clock_t timer = clock();
-
-	//Init Rooms
-	Room *forest = new Room("The forest", "You are in the forest.");
-	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.\nThe forest stay at the west.");
-
-	//Exits
-	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, false);
-	Exit *bridgeToForest = new Exit("west", "This is a sandy road which arrives until the forest", "bridge", bridge, forest, false, false);
-
-	entities.push_back(forest);
-	entities.push_back(bridge);
-	entities.push_back(forestToBridge);
-	entities.push_back(bridgeToForest);
-	//Player creation
-	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", forest);
-
-	//Items from player since start
-	Item *document = new Item("Document", "Mission:\nYou blabla", player);
-	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player);
-	Item *sbPage1 = new Item("Ignite", "This spell throws a flame to the enemy.\nIt costs 20 mana points and hurt 10 damage.\nIt have 10 seconds of cooldown", spellbook);
-	entities.push_back(document);
-	entities.push_back(spellbook);
-	entities.push_back(sbPage1);
-
-	return true;
-}
+{}
 
 World::~World()
 {
@@ -96,14 +64,21 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			cout << "You must say where you want to go.\n";
 		}
-		else if (Same(args[0], "east") || Same(args[0], "west") || Same(args[0], "north") || Same(args[0], "south")) {
+		else if (Same(args[0], "east") || Same(args[0], "west") || Same(args[0], "north") || Same(args[0], "south")) 
+		{
 			args.push_back(args[0]);
 			args[0] = "go";
 			player->Go(args);
 		}
-		else if (Same(args[0], "inventory")){
+		else if (Same(args[0], "inventory"))
+		{
 			player->Inventory(args);
 		}
+		else if (Same(args[0], "take"))
+		{
+			cout << "You must say what you want to take.\n";
+		}
+		else ret = false;
 		break;
 	case 2:
 		if (Same(args[0], "go"))
@@ -114,16 +89,21 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			player->Look(args);
 		}
+		else if (Same(args[0], "take"))
+		{
+			player->Take(args);
+		}
+		else ret = false;
 		break;
 	default:
-		cout << "Sorry, I don't understand this action.\n";
+		ret = false;
 	}
 	return ret;
 }
 
 string World::Introduction()
 {
-	cout << "Welcome dear\... Oh, wait\... Can you remember your name\?\n";
+	cout << "Welcome dear... Oh, wait... Can you remember your name\?\n";
 	cout << "> ";
 	string input_name;
 	getline(cin, input_name);
@@ -139,4 +119,41 @@ string World::Introduction()
 	cout << "you have used during all this years at school. Good luck!\n\n";
 
 	return input_name;
+}
+
+bool World::Init() {
+	clock_t timer = clock();
+
+	//Init Rooms
+	Room *forest = new Room("The forest", "You are in the forest.");
+	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.");
+	Room *door = new Room("The door", "You are in the entrance of the castle the huge door is at the east.\n");
+	//Exits
+	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, false);
+	Exit *bridgeToForest = new Exit("west", "This is a sandy road which arrives until the forest", "forest", bridge, forest, false, false);
+	Exit *bridgeToDoor = new Exit("east", "This bridge brings you to the door", "door", bridge, door, false, false);
+	Exit *doorToBridge = new Exit("west", "This path brings you to the bridge", "bridge", door, bridge, false, false);
+
+	entities.push_back(forest);
+	entities.push_back(bridge);
+	entities.push_back(forestToBridge);
+	entities.push_back(bridgeToForest);
+	entities.push_back(bridgeToDoor);
+	entities.push_back(doorToBridge);
+	//Player creation
+	string name = Introduction().c_str();
+	player = new Player(name.c_str(), "You are a magician apprentice", door);
+
+	//Items from player since start
+	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
+	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player, nullptr, false);
+	Item *sbPage1 = new Item("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nIt costs 20 mana points and hurt 10 damage.\nIt have 10 seconds of cooldown", spellbook, spellbook, false);
+	Item *doorSign = new Item("Sign", "Only the helthy people can enter the castle!", door, nullptr, true);
+	Item *sbPage2 = new Item("Bookpage2", "Exura: This spell restore you hit points.\nIt costs 20 mana points and you will get 30 hit points.\nIt have 10 seconds of cooldown", door, spellbook, false);
+	entities.push_back(document);
+	entities.push_back(spellbook);
+	entities.push_back(sbPage1);
+	entities.push_back(doorSign);
+
+	return true;
 }

@@ -25,11 +25,12 @@ public:
 	virtual void ChangeParentTo(Entity* new_parent);
 	virtual void Update();
 	virtual void FindByTypeAndPropietary(EntityType type, list<Entity*>&entity_list, const Entity* propietari) const;
+	virtual Entity* GetItemByName(const string item_name);
 
 public:
 	EntityType type;
-	std::string name;
-	std::string description;
+	string name;
+	string description;
 
 	Entity* parent;
 	list<Entity*> container;

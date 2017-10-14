@@ -4,11 +4,10 @@
 #include "Item.h"
 
 
-Item::Item(const char* name, const char* description, Entity* parent) :
-	Entity(name, description, parent)
+Item::Item(const char* name, const char* description, Entity* parent, Entity* must, bool fix) :
+	Entity(name, description, parent),fixed(fix),must(must)
 {
 	type = ITEM;
-
 }
 
 Item::~Item()

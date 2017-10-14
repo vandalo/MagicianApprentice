@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "Defines.h"
 
-// ----------------------------------------------------
 Entity::Entity(const char* name, const char* description, Entity* parent = nullptr) :
 	name(name), description(description), parent(parent)
 {
@@ -55,4 +54,19 @@ void Entity::FindByTypeAndPropietary(EntityType type, list<Entity*>& entity_list
 		}
 		
 	}
+}
+
+Entity * Entity::GetItemByName(const string item_name)
+{
+	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
+	{
+		if ((*it)->type == ITEM) {
+			Entity* entity = (Entity*)*it;
+			if (Same(entity->name, item_name))
+			{
+				return entity;
+			}
+		}
+	}
+	return nullptr;
 }

@@ -7,9 +7,6 @@
 
 class Room;
 
-using namespace std;
-
-
 class Player : public Entity
 {
 public:
@@ -19,8 +16,10 @@ public:
 	void Look(const vector<string>& args) const;
 	void Stats(const vector<string>& args) const;
 	void Go(const vector<string>& args);
+	void Take(const vector<string>& args);
 	Room* GetRoom() const;
 	void Inventory(const vector<string>& args) const;
+	
 
 private:
 	unsigned int lvl = 0;

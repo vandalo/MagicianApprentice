@@ -6,7 +6,6 @@
 #include <list>
 #include <time.h>
 
-
 using namespace std;
 
 class Entity;

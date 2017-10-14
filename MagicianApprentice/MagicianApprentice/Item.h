@@ -5,24 +5,22 @@
 #include <list>
 #include "Entity.h"
 
-class Entity;
-
-using namespace std;
-
 class Room;
 
 class Item : public Entity
 {
 public:
-	Item(const char* name, const char* description, Entity* parent);
+	Item(const char* name, const char* description, Entity* parent, Entity* must, bool fix);
 	~Item();
-
 	void Look() const;
 
+public:
+	bool fixed;
+	Entity* must;	//This entity is a must that player need to collect the item.
 
 
 private:
-
+	
 };
 
 #endif
