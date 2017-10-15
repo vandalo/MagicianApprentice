@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include "entity.h"
+#include <vector>
 
 class Room;
 
@@ -19,7 +20,9 @@ public:
 	void Take(const vector<string>& args);
 	Room* GetRoom() const;
 	void Inventory(const vector<string>& args) const;
-	
+	void Open(const vector<string>& args);
+	int GetHp();
+	int GetMaxHp();
 
 private:
 	unsigned int lvl = 0;

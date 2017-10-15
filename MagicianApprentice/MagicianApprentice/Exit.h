@@ -10,7 +10,7 @@ class Room;
 class Exit : public Entity
 {
 public:
-	Exit(const char* name, const char* description, const char* destinationName, Room* origin, Room* destination, bool locked, bool closed);
+	Exit(const char* name, const char* description, const char* destinationName, Room* origin, Room* destination, bool closed, Entity* condition);
 	~Exit();
 
 
@@ -18,13 +18,19 @@ public:
 
 	const string & GetNameByRoom(const Room * room) const;
 	Room* GetDestinationByRoom(const Room * room) const;
+	const string GetDestination() const;
+	void Open();
 	
-private:
-
-	Room* destination = nullptr;
-	const char* destinationName = nullptr;
+public:
 	bool closed;
-	bool locked;
+
+private:
+	const char* destinationName = nullptr;
+	Room* destination = nullptr;
+
+	
+	Entity* condition;
+
 };
 
 #endif

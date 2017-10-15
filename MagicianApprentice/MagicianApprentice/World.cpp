@@ -93,6 +93,12 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			player->Take(args);
 		}
+		else if (Same(args[0], "open"))
+		{
+			{
+				player->Open(args);
+			}
+		}
 		else ret = false;
 		break;
 	default:
@@ -128,18 +134,15 @@ bool World::Init() {
 	Room *forest = new Room("The forest", "You are in the forest.");
 	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.");
 	Room *door = new Room("The door", "You are in the entrance of the castle the huge door is at the east.\n");
-	//Exits
-	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, false);
-	Exit *bridgeToForest = new Exit("west", "This is a sandy road which arrives until the forest", "forest", bridge, forest, false, false);
-	Exit *bridgeToDoor = new Exit("east", "This bridge brings you to the door", "door", bridge, door, false, false);
-	Exit *doorToBridge = new Exit("west", "This path brings you to the bridge", "bridge", door, bridge, false, false);
+	Room *hall = new Room("The hall", "You are at the hall of the castle.\n");
 
 	entities.push_back(forest);
 	entities.push_back(bridge);
-	entities.push_back(forestToBridge);
-	entities.push_back(bridgeToForest);
-	entities.push_back(bridgeToDoor);
-	entities.push_back(doorToBridge);
+	entities.push_back(door);
+	entities.push_back(hall);
+
+	
+
 	//Player creation
 	string name = Introduction().c_str();
 	player = new Player(name.c_str(), "You are a magician apprentice", door);
@@ -150,10 +153,26 @@ bool World::Init() {
 	Item *sbPage1 = new Item("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nIt costs 20 mana points and hurt 10 damage.\nIt have 10 seconds of cooldown", spellbook, spellbook, false);
 	Item *doorSign = new Item("Sign", "Only the helthy people can enter the castle!", door, nullptr, true);
 	Item *sbPage2 = new Item("Bookpage2", "Exura: This spell restore you hit points.\nIt costs 20 mana points and you will get 30 hit points.\nIt have 10 seconds of cooldown", door, spellbook, false);
+	
 	entities.push_back(document);
 	entities.push_back(spellbook);
 	entities.push_back(sbPage1);
 	entities.push_back(doorSign);
+
+
+	//Exits
+	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, nullptr);
+	Exit *bridgeToForest = new Exit("west", "This is a sandy road which arrives until the forest", "forest", bridge, forest, false, nullptr);
+	Exit *bridgeToDoor = new Exit("east", "This bridge brings you to the door", "door", bridge, door, false, nullptr);
+	Exit *doorToBridge = new Exit("west", "This path brings you to the bridge", "bridge", door, bridge, false, nullptr);
+	Exit *doorToHall = new Exit("east", "This is the main door from the castle", "door", door, hall, true, player);
+	Exit *HallToDoor = new Exit("west", "This is the main door from the castle", "door", hall, door, false, nullptr);
+
+	entities.push_back(forestToBridge);
+	entities.push_back(bridgeToForest);
+	entities.push_back(bridgeToDoor);
+	entities.push_back(doorToBridge);
+	entities.push_back(doorToHall);
 
 	return true;
 }

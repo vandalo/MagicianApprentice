@@ -24,6 +24,21 @@ Player::Player(const char* name, const char* description, Entity* parent) :
 Player::~Player()
 {}
 
+int Player::GetHp()
+{
+	return hp;
+}
+
+int Player::GetMaxHp()
+{
+	return maxHp;
+}
+
+Room* Player::GetRoom() const
+{
+	return (Room*)parent;
+}
+
 void Player::Look(const vector<string>& args) const
 {
 	if (args.size() > 1)
@@ -81,11 +96,6 @@ void Player::Stats(const vector<string>& args) const
 	cout << "You have " << mana << " mana points" << endl;
 }
 
-Room* Player::GetRoom() const
-{
-	return (Room*)parent;
-}
-
 void Player::Inventory(const vector<string>& args) const
 {
 	list<Entity*> items;
@@ -94,6 +104,21 @@ void Player::Inventory(const vector<string>& args) const
 	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 	{
 		(*it)->Look();
+	}
+}
+
+void Player::Open(const vector<string>& args)
+{
+	list<Entity*> exits;
+	FindByTypeAndPropietary(EXIT, exits, GetRoom());
+
+	for (list<Entity*>::const_iterator it = exits.begin(); it != exits.cend(); ++it)
+	{
+		Exit* exit = (Exit*)(*it);
+		if (exit->name == args[1] || exit->GetDestination() == args[1])
+		{
+			exit->Open();
+		}
 	}
 }
 
@@ -106,8 +131,16 @@ void Player::Go(const vector<string>& args)
 	}
 	else
 	{
-		ChangeParentTo(exit->GetDestinationByRoom(GetRoom()));
-		parent->Look();
+		if (exit->closed == true)
+		{
+			cout << "You can't pass " + (args[1]) + " it's locked.\n";
+		}
+		else
+		{
+			ChangeParentTo(exit->GetDestinationByRoom(GetRoom()));
+			parent->Look();
+		}
+		
 	}
 }
 
@@ -135,19 +168,25 @@ void Player::Take(const vector<string>& args)
 			if (item->must == nullptr)
 			{
 				item->ChangeParentTo(this);
-				cout << "You added the page to your inventory.\n";
+				cout << "You added the " + item->name + " to your inventory.\n";
 			}
 			else
 			{
 				list<Entity*> items;
 				FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+				bool find = false;
 				for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 				{
 					if ((*it)->name == item->must->name)
 					{
 						item->ChangeParentTo(*it);
-						cout << "You added the page to your " + (*it)->name + ".\n";
+						cout << "You added " + item->name + " to your " + (*it)->name + ".\n";
+						find = true;
 					}
+				}
+				if (find != true)
+				{
+					cout << "You can't take " + (args[1]) + ".\n";
 				}
 			}
 		}
