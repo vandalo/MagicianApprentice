@@ -133,19 +133,28 @@ bool World::Init() {
 	//Init Rooms
 	Room *forest = new Room("The forest", "You are in the forest.");
 	Room *bridge = new Room("The bridge", "You are at the bridge which connect the forest with the castle. The castle is near at the east.");
-	Room *door = new Room("The door", "You are in the entrance of the castle the huge door is at the east.\n");
-	Room *hall = new Room("The hall", "You are at the hall of the castle.\n");
+	Room *door = new Room("The door", "You are in the entrance of the castle the huge door is at the east.");
+	Room *hall = new Room("The hall", "You are at the hall of the castle.");
+	Room *diningroom = new Room("Dining room", "You are at the dining room. The room is very big, at the middle\nyou can see the table, at the east part there is a fireplace with beautiful flames.");
+	Room *kitchen = new Room("Kitchen", "This is the kitchen of the castle. It is plenty of cooking items.");
+	Room *firstfloor = new Room("First floor", "You see a huge room.");
+	Room *library = new Room("First floor", "You are at the castle’s library. The ceiling is very high.\nYou can see an enormous number of books. There is an stair to arrive to the books at the top of the shelfs.");
+
 
 	entities.push_back(forest);
 	entities.push_back(bridge);
 	entities.push_back(door);
 	entities.push_back(hall);
+	entities.push_back(diningroom);
+	entities.push_back(kitchen);
+	entities.push_back(firstfloor);
+	entities.push_back(library);
 
 	
 
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", door);
+	player = new Player(name.c_str(), "You are a magician apprentice", forest);
 
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
@@ -167,12 +176,26 @@ bool World::Init() {
 	Exit *doorToBridge = new Exit("west", "This path brings you to the bridge", "bridge", door, bridge, false, nullptr);
 	Exit *doorToHall = new Exit("east", "This is the main door from the castle", "door", door, hall, true, player);
 	Exit *HallToDoor = new Exit("west", "This is the main door from the castle", "door", hall, door, false, nullptr);
+	Exit *HallToKitchen = new Exit("south", "You can see the kitchen right there", "kitchen", hall, kitchen, false, nullptr);
+	Exit *KitchenToHall = new Exit("north", "You can see the big hall", "hall", kitchen, hall, false, nullptr);
+	Exit *HallToDiningroom = new Exit("east", "You can see the dining room throw the door", "dining room", hall, diningroom, false, nullptr);
+	Exit *DiningroomToHall = new Exit("west", "You can see the big hall", "hall", diningroom, hall, false, nullptr);
+	Exit *HallToFirstfloor = new Exit("up", "You can see an extremly beautifull stairs which arrive to the first floor", "stairs", hall, firstfloor, false, nullptr);
+	Exit *FirstfloorToHall = new Exit("down", "You can see an extremly beautifull stairs which arrive to the hall", "stairs", firstfloor, hall, false, nullptr);
+
 
 	entities.push_back(forestToBridge);
 	entities.push_back(bridgeToForest);
 	entities.push_back(bridgeToDoor);
 	entities.push_back(doorToBridge);
 	entities.push_back(doorToHall);
+
+	entities.push_back(HallToKitchen);
+	entities.push_back(KitchenToHall);
+	entities.push_back(HallToDiningroom);
+	entities.push_back(DiningroomToHall);
+	entities.push_back(HallToFirstfloor);
+	entities.push_back(FirstfloorToHall);
 
 	return true;
 }

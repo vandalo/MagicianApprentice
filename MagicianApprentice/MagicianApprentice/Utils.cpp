@@ -22,7 +22,7 @@ int CustomRand(int min, int max)
 
 void ParseInput(const string& line, vector<string>& arguments)
 {
-	for (int i = 0; i < line.size(); ++i) {
+	for (unsigned int i = 0; i < line.size(); ++i) {
 		string token = "";
 		while (line[i] != ' ' && i < line.size()) {
 			token += line[i];

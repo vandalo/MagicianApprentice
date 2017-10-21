@@ -16,7 +16,7 @@ public:
 
 	void Look() const;
 
-	const string & GetNameByRoom(const Room * room) const;
+	const string GetNameByRoom(const Room * room) const;
 	Room* GetDestinationByRoom(const Room * room) const;
 	const string GetDestination() const;
 	void Open();

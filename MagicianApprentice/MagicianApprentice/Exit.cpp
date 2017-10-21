@@ -22,7 +22,7 @@ void Exit::Look() const{
 	}
 }
 
-const string& Exit::GetNameByRoom(const Room* room) const
+const string Exit::GetNameByRoom(const Room* room) const
 {
 	if (room == parent)
 	{
@@ -31,7 +31,7 @@ const string& Exit::GetNameByRoom(const Room* room) const
 		
 	if (room == destination)
 	{
-		return destinationName;
+		return GetDestination();
 	}
 
 	return name;
