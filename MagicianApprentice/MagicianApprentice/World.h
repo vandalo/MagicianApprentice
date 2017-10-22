@@ -21,7 +21,7 @@ public:
 	bool Init();
 	bool ReadComand(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
-	void GameLoop();
+	bool GameLoop();
 
 private:
 	string Introduction();

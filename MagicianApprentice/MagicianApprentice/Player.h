@@ -3,12 +3,13 @@
 
 #include <string>
 #include <list>
-#include "entity.h"
+#include "creature.h"
 #include <vector>
 
 class Room;
+class Monster;
 
-class Player : public Entity
+class Player : public Creature
 {
 public:
 	Player(const char* name, const char* description, Entity* parent);
@@ -23,6 +24,14 @@ public:
 	void Open(const vector<string>& args);
 	int GetHp();
 	int GetMaxHp();
+	bool Atack();
+	unsigned int reciveAtack(unsigned int damage);
+	void UseSpell(const vector<string>& args);
+
+private:
+	void Ignite();
+	bool HaveSpell(const vector<string>& args);
+	string GetSpellbookpageBySpell(const vector<string>& args);
 
 private:
 	unsigned int lvl = 0;

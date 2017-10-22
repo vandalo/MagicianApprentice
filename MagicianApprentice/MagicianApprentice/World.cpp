@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Exit.h"
 #include "Item.h"
+#include "Spider.h"
 
 World::World()
 {}
@@ -31,19 +32,18 @@ bool World::ReadComand(vector<string>& args)
 	return ret;
 }
 
-void World::GameLoop()
+bool World::GameLoop()
 {
 	clock_t now = clock();
-
+	bool ret = false;
 	//Clock every second
 	if ((now - timer) / 500 > FRAME_RATE)
 	{
 		for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
-			(*it)->Update();
-
+			ret |= (*it)->Update();
 		timer = now;
 	}
-
+	return ret;
 }
 
 bool World::ParseCommand(vector<string>& args)
@@ -77,6 +77,10 @@ bool World::ParseCommand(vector<string>& args)
 		else if (Same(args[0], "take"))
 		{
 			cout << "You must say what you want to take.\n";
+		}
+		else if (Same(args[0], "ignite") || Same(args[0], "exura"))
+		{
+			player->UseSpell(args);
 		}
 		else ret = false;
 		break;
@@ -150,11 +154,9 @@ bool World::Init() {
 	entities.push_back(firstfloor);
 	entities.push_back(library);
 
-	
-
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", forest);
+	player = new Player(name.c_str(), "You are a magician apprentice", bridge);
 
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
@@ -196,6 +198,10 @@ bool World::Init() {
 	entities.push_back(DiningroomToHall);
 	entities.push_back(HallToFirstfloor);
 	entities.push_back(FirstfloorToHall);
+
+	//Monsters
+	Spider *spiderOfBridge = new Spider("Spider", "You can see an spider", bridge);
+	entities.push_back(spiderOfBridge);
 
 	return true;
 }

@@ -4,15 +4,13 @@
 #include "Exit.h"
 #include "Room.h"
 #include "Item.h"
+#include "Monster.h"
 #include <string>
 
 Player::Player(const char* name, const char* description, Entity* parent) :
-	Entity(name, description, parent)
+	Creature(name, description, parent)
 {
 	type = PLAYER;
-
-	if (parent != nullptr)
-		parent->container.push_back(this);
 
 	hp = 50;
 	maxHp = 50;
@@ -34,6 +32,96 @@ int Player::GetMaxHp()
 	return maxHp;
 }
 
+bool Player::Atack()
+{
+	return true;
+}
+
+unsigned int Player::reciveAtack(unsigned int damage)
+{
+	hp -= damage;
+	return damage;
+}
+
+void Player::UseSpell(const vector<string>& args)
+{
+	if (HaveSpell(args))
+	{
+		if (Same(args[0], "ignite"))
+		{
+			{
+				Ignite();
+			}
+		}
+	}
+	else
+	{
+		cout << "You have not learned this spell!\n";
+	}
+}
+
+bool Player::HaveSpell(const vector<string>& args)
+{
+	bool ret = false;
+	list<Entity*> items;
+	FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+	string spellbookPageName = GetSpellbookpageBySpell(args);
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	{
+		Item* item = (Item*)(*it);
+
+		if (item->container.size() > 0)
+		{
+			for (list<Entity*>::const_iterator it = item->container.begin(); it != item->container.cend(); ++it)
+			{
+				if (Same((*it)->name, spellbookPageName))
+				{
+					ret = true;
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+string Player::GetSpellbookpageBySpell(const vector<string>& args)
+{
+	string res = "";
+	if (Same(args[0], "ignite"))
+	{
+		res = "Bookpage1";
+	}
+	else if (Same(args[0], "exura"))
+	{
+		res = "Bookpage2";
+	}
+
+	return res;
+}
+
+void Player::Ignite()
+{
+	Room* room = GetRoom();
+	for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
+	{
+		if ((*it)->type == MONSTER)
+		{
+			Monster* monster = (Monster*)(*it);
+			if (monster->IsAlive() == true)
+			{
+				unsigned int damage = monster->reciveAtack(10);
+				cout << "You deal " << damage << " damage to " << monster->name << ".\n";
+				if (monster->IsAlive() == false)
+				{
+					cout << "You defeat the " << monster->name << ".\n";
+				}
+			}
+			
+		}
+	}
+
+}
+
 Room* Player::GetRoom() const
 {
 	return (Room*)parent;
@@ -47,7 +135,16 @@ void Player::Look(const vector<string>& args) const
 		{
 			if (Same((*it)->name, args[1]))
 			{
-				(*it)->Look();
+				if ((*it)->type == MONSTER)
+				{
+					Monster* monster = (Monster*)(*it);
+					monster->Look();
+				}
+				else
+				{
+					(*it)->Look();
+					
+				}
 				return;
 			}
 		}

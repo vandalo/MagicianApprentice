@@ -12,7 +12,9 @@ enum EntityType
 	ROOM,
 	PLAYER,
 	EXIT,
-	ITEM
+	ITEM,
+	CREATURE,
+	MONSTER
 };
 
 class Entity
@@ -23,7 +25,7 @@ public:
 
 	virtual void Look() const;
 	virtual void ChangeParentTo(Entity* new_parent);
-	virtual void Update();
+	virtual bool Update();
 	virtual void FindByTypeAndPropietary(EntityType type, list<Entity*>&entity_list, const Entity* propietari) const;
 	virtual Entity* GetItemByName(const string item_name);
 

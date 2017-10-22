@@ -3,14 +3,12 @@
 #include "Room.h"
 #include "Exit.h"
 #include "Item.h"
+#include "Monster.h"
 
 Room::Room(const char* name, const char* description) :
 	Entity(name, description, nullptr)
 {
 	type = ROOM;
-
-	if (parent != nullptr)
-		parent->container.push_back(this);
 }
 
 Room::~Room()
@@ -33,6 +31,11 @@ void Room::Look() const
 		{
 			Item* item = (Item*)*it;
 			cout << "You can see a " << item->name.c_str() << ".\n";
+		}
+		if ((*it)->type == MONSTER)
+		{
+			Monster* monster = (Monster*)*it;
+			cout << "You can see a " << monster->name.c_str() << ".\n";
 		}
 	}
 

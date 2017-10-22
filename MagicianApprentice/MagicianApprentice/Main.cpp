@@ -71,7 +71,10 @@ int main() {
 				cout << endl << "> ";
 			}
 			else {
-				my_world.GameLoop();
+				if (my_world.GameLoop())
+				{
+					cout << "> " << player_input;
+				}
 			}
 		}
 

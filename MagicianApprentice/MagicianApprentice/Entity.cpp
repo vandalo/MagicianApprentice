@@ -33,8 +33,10 @@ void Entity::ChangeParentTo(Entity* new_parent)
 }
 
 
-void Entity::Update()
-{}
+bool Entity::Update()
+{
+	return false;
+}
 
 void Entity::FindByTypeAndPropietary(EntityType type, list<Entity*>& entity_list, const Entity* propietari) const
 {
