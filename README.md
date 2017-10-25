@@ -12,7 +12,7 @@ It don't need any instalation.
 
 ### Playing
 
-Download the zip file which you can find on release guihub tab or in the web ___________________
+Download the zip file which you can find on release guihub tab or in the web https://vandalo.github.io/MagicianApprentice/
 
 ### Coding style
 
