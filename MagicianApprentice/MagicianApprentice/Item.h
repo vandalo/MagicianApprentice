@@ -5,14 +5,13 @@
 #include <list>
 #include "Entity.h"
 
-class Room;
-
 class Item : public Entity
 {
 public:
 	Item(const char* name, const char* description, Entity* parent, Entity* must, bool fix);
 	~Item();
 	void Look() const;
+	//bool Update();
 
 public:
 	bool fixed;

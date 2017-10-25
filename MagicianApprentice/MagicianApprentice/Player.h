@@ -8,6 +8,7 @@
 
 class Room;
 class Monster;
+class Spell;
 
 class Player : public Creature
 {
@@ -27,11 +28,11 @@ public:
 	bool Atack();
 	unsigned int reciveAtack(unsigned int damage);
 	void UseSpell(const vector<string>& args);
+	void updateMana(int mana);
+	void updateHp(int hp);
 
 private:
-	void Ignite();
-	bool HaveSpell(const vector<string>& args);
-	string GetSpellbookpageBySpell(const vector<string>& args);
+	Spell* HaveSpellAndMana(const vector<string>& args);
 
 private:
 	unsigned int lvl = 0;

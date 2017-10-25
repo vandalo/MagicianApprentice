@@ -62,7 +62,7 @@ Entity * Entity::GetItemByName(const string item_name)
 {
 	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 	{
-		if ((*it)->type == ITEM) {
+		if ((*it)->type == ITEM || (*it)->type == SPELL) {
 			Entity* entity = (Entity*)*it;
 			if (Same(entity->name, item_name))
 			{

@@ -65,43 +65,15 @@ bool Spider::Atack()
 
 bool Spider::Update()
 {
+	bool ret = false;
 	if (IsAlive())
 	{
-		return Atack();
+		ret = Atack();
 	}
+	return ret;
 }
 
 Room* Spider::GetRoom() const
 {
 	return (Room*)parent;
-}
-
-/*void Spider::Look() const
-{
-	cout << name << "\n";
-	cout << description << "\n";
-	cout << information << "\n";
-}*/
-
-void Spider::Stats(const vector<string>& args) const
-{
-	int lifePercent = hp * 100 / maxHp;
-
-	//cout << "You are level " << lvl << endl;
-
-	if (lifePercent > 75)
-	{
-		cout << name << "is healthy, ";
-	}
-	else if (lifePercent > 25)
-	{
-		cout << name << "is hurt, ";
-	}
-	else
-	{
-		cout << name << "is almost death, ";
-	}
-
-	cout << name << " have " << hp << "/" << maxHp << " hit points" << endl;
-	cout << name << " have " << mana << " mana points" << endl;
 }

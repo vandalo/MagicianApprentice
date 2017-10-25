@@ -16,6 +16,9 @@
     <Filter Include="Creatures">
       <UniqueIdentifier>{e605367f-136f-4d5c-aa4d-bea8332bc38b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Spells">
+      <UniqueIdentifier>{a88f917c-0906-44d0-a2c8-24ef494ca0da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,6 +54,15 @@
     <ClCompile Include="Spider.cpp">
       <Filter>Creatures</Filter>
     </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>Spells</Filter>
+    </ClCompile>
+    <ClCompile Include="Ignite.cpp">
+      <Filter>Spells</Filter>
+    </ClCompile>
+    <ClCompile Include="Exura.cpp">
+      <Filter>Spells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -85,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="Spider.h">
       <Filter>Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="Ignite.h">
+      <Filter>Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="Exura.h">
+      <Filter>Spells</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

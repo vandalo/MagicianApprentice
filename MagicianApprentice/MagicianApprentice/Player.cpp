@@ -4,6 +4,7 @@
 #include "Exit.h"
 #include "Room.h"
 #include "Item.h"
+#include "Spell.h"
 #include "Monster.h"
 #include <string>
 
@@ -45,28 +46,34 @@ unsigned int Player::reciveAtack(unsigned int damage)
 
 void Player::UseSpell(const vector<string>& args)
 {
-	if (HaveSpell(args))
+	Spell* spell = HaveSpellAndMana(args);
+	if (spell != nullptr)
 	{
-		if (Same(args[0], "ignite"))
-		{
-			{
-				Ignite();
-			}
-		}
-	}
-	else
-	{
-		cout << "You have not learned this spell!\n";
+		spell->effect(this);
 	}
 }
 
-bool Player::HaveSpell(const vector<string>& args)
+void Player::updateMana(int manaMod)
 {
-	bool ret = false;
-	list<Entity*> items;
-	FindByTypeAndPropietary(ITEM, items, (Entity*)this);
-	string spellbookPageName = GetSpellbookpageBySpell(args);
-	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	mana += manaMod;
+}
+
+void Player::updateHp(int hpMod)
+{
+	hp += hpMod;
+	if(hp > maxHp)
+	{
+		hp = maxHp;
+	}
+}
+
+Spell * Player::HaveSpellAndMana(const vector<string>& args)
+{
+	bool haveSpell = false;
+	Spell* ret = nullptr;
+	list<Entity*> spells;
+	FindByTypeAndPropietary(ITEM, spells, (Entity*)this);
+	for (list<Entity*>::const_iterator it = spells.begin(); it != spells.cend(); ++it)
 	{
 		Item* item = (Item*)(*it);
 
@@ -74,52 +81,39 @@ bool Player::HaveSpell(const vector<string>& args)
 		{
 			for (list<Entity*>::const_iterator it = item->container.begin(); it != item->container.cend(); ++it)
 			{
-				if (Same((*it)->name, spellbookPageName))
+				if ((*it)->type == SPELL)
 				{
-					ret = true;
+					Spell* spell = (Spell*)(*it);
+
+					if (Same(spell->nameSpell, args[0]))
+					{
+						haveSpell = true;
+						if (mana > spell->mana)
+						{
+							if (spell->cdTime <= 0)
+							{
+								ret = spell;
+							}
+							else
+							{
+								cout << "This spell is in cooldown!\nYou have to wait " << spell->cdTime << " seconds to use it again.\n";
+							}
+							
+						}
+						else
+						{
+							cout << "You have not enought mana!\n";
+						}
+					}
 				}
 			}
 		}
+	}
+	if (haveSpell == false)
+	{
+		cout << "You don\'t know this spell yet!\n";
 	}
 	return ret;
-}
-
-string Player::GetSpellbookpageBySpell(const vector<string>& args)
-{
-	string res = "";
-	if (Same(args[0], "ignite"))
-	{
-		res = "Bookpage1";
-	}
-	else if (Same(args[0], "exura"))
-	{
-		res = "Bookpage2";
-	}
-
-	return res;
-}
-
-void Player::Ignite()
-{
-	Room* room = GetRoom();
-	for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
-	{
-		if ((*it)->type == MONSTER)
-		{
-			Monster* monster = (Monster*)(*it);
-			if (monster->IsAlive() == true)
-			{
-				unsigned int damage = monster->reciveAtack(10);
-				cout << "You deal " << damage << " damage to " << monster->name << ".\n";
-				if (monster->IsAlive() == false)
-				{
-					cout << "You defeat the " << monster->name << ".\n";
-				}
-			}
-			
-		}
-	}
-
 }
 
 Room* Player::GetRoom() const
@@ -271,6 +265,7 @@ void Player::Take(const vector<string>& args)
 			{
 				list<Entity*> items;
 				FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+				FindByTypeAndPropietary(SPELL, items, (Entity*)this);
 				bool find = false;
 				for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 				{

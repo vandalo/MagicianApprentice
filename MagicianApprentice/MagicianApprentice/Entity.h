@@ -14,7 +14,8 @@ enum EntityType
 	EXIT,
 	ITEM,
 	CREATURE,
-	MONSTER
+	MONSTER,
+	SPELL
 };
 
 class Entity

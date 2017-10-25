@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "Exit.h"
 #include "Item.h"
+#include "Spell.h"
 #include "Monster.h"
 
 Room::Room(const char* name, const char* description) :
@@ -27,12 +28,17 @@ void Room::Look() const
 			Exit* exit = (Exit*)*it;
 			cout << "At " << exit->GetNameByRoom(this) << " you can see " << exit->GetDestination() << "\n";
 		}
-		if ((*it)->type == ITEM)
+		else if ((*it)->type == ITEM)
 		{
 			Item* item = (Item*)*it;
 			cout << "You can see a " << item->name.c_str() << ".\n";
 		}
-		if ((*it)->type == MONSTER)
+		else if ((*it)->type == SPELL)
+		{
+			Spell* spell = (Spell*)*it;
+			cout << "You can see a " <<spell->name.c_str() << ".\n";
+		}
+		else if ((*it)->type == MONSTER)
 		{
 			Monster* monster = (Monster*)*it;
 			cout << "You can see a " << monster->name.c_str() << ".\n";

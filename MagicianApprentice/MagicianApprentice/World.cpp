@@ -8,6 +8,9 @@
 #include "Exit.h"
 #include "Item.h"
 #include "Spider.h"
+#include "Spell.h"
+#include "Ignite.h"
+#include "Exura.h"
 
 World::World()
 {}
@@ -161,9 +164,9 @@ bool World::Init() {
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
 	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player, nullptr, false);
-	Item *sbPage1 = new Item("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nIt costs 20 mana points and hurt 10 damage.\nIt have 10 seconds of cooldown", spellbook, spellbook, false);
 	Item *doorSign = new Item("Sign", "Only the helthy people can enter the castle!", door, nullptr, true);
-	Item *sbPage2 = new Item("Bookpage2", "Exura: This spell restore you hit points.\nIt costs 20 mana points and you will get 30 hit points.\nIt have 10 seconds of cooldown", door, spellbook, false);
+	Ignite *sbPage1 = new Ignite("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nYou will deal 10 damage.", spellbook, spellbook, 20, 10, "ignite");
+	Exura *sbPage2 = new Exura("Bookpage2", "Exura: This spell restore you hit points.\nYou will get 30 hp.", door, spellbook, 20, 10, "exura");
 	
 	entities.push_back(document);
 	entities.push_back(spellbook);

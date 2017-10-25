@@ -60,9 +60,10 @@ void Monster::Look() const
 	
 	cout << description << "\n";
 	cout << information << "\n";
+	Stats();
 }
 
-void Monster::Stats(const vector<string>& args) const
+void Monster::Stats() const
 {
 	int lifePercent = hp * 100 / maxHp;
 
@@ -70,17 +71,16 @@ void Monster::Stats(const vector<string>& args) const
 
 	if (lifePercent > 75)
 	{
-		cout << name << "is healthy, ";
+		cout << name << " is healthy, ";
 	}
 	else if (lifePercent > 25)
 	{
-		cout << name << "is hurt, ";
+		cout << name << " is hurt, ";
 	}
 	else
 	{
-		cout << name << "is almost death, ";
+		cout << name << " is almost death, ";
 	}
 
 	cout << name << " have " << hp << "/" << maxHp << " hit points" << endl;
-	cout << name << " have " << mana << " mana points" << endl;
 }

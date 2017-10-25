@@ -21,7 +21,7 @@ void Item::Look() const {
 	if (container.size() > 0) cout << name + " contains:\n";
 	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 	{
-		if ((*it)->type == ITEM)
+		if ((*it)->type == ITEM || (*it)->type == SPELL)
 		{
 			Item* item = (Item*)*it;
 			item->Look();
