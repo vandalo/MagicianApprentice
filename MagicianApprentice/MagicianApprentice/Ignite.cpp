@@ -11,7 +11,7 @@ Ignite::Ignite(const char* name, const char* description, Entity* parent, Entity
 
 void Ignite::effect(Player * player)
 {
-	player->updateMana(-(int)mana);
+	player->UpdateMana(-(int)mana);
 
 	Room* room = player->GetRoom();
 	for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
@@ -21,7 +21,7 @@ void Ignite::effect(Player * player)
 			Monster* monster = (Monster*)(*it);
 			if (monster->IsAlive() == true)
 			{
-				unsigned int damage = monster->reciveAtack(10);
+				unsigned int damage = monster->ReciveAtack(10);
 				cout << "You deal " << damage << " damage to " << monster->name << ".\n";
 				if (monster->IsAlive() == false)
 				{

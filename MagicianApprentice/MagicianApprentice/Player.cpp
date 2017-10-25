@@ -7,17 +7,17 @@
 #include "Spell.h"
 #include "Monster.h"
 #include <string>
+#include "World.h"
 
-Player::Player(const char* name, const char* description, Entity* parent) :
-	Creature(name, description, parent)
+Player::Player(const char* name, const char* description, Entity* parent, World* myWorld) :
+	Creature(name, description, parent), myWorld(myWorld)
 {
 	type = PLAYER;
-
+	
 	hp = 50;
 	maxHp = 50;
 	mana = 100;
 	lvl = 1;
-
 }
 
 Player::~Player()
@@ -38,7 +38,7 @@ bool Player::Atack()
 	return true;
 }
 
-unsigned int Player::reciveAtack(unsigned int damage)
+unsigned int Player::ReciveAtack(unsigned int damage)
 {
 	hp -= damage;
 	return damage;
@@ -53,18 +53,86 @@ void Player::UseSpell(const vector<string>& args)
 	}
 }
 
-void Player::updateMana(int manaMod)
+void Player::UpdateMana(int manaMod)
 {
 	mana += manaMod;
 }
 
-void Player::updateHp(int hpMod)
+void Player::UpdateHp(int hpMod)
 {
 	hp += hpMod;
 	if(hp > maxHp)
 	{
 		hp = maxHp;
 	}
+}
+
+void Player::Use(const vector<string>& args)
+{
+	list<Entity*> items;
+	FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+	bool find = false;
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend() && find == false; ++it)
+	{
+		if (Same((*it)->name, args[1]))
+		{
+			Item* item = (Item*)(*it);
+			item->Use(this, args);
+			find = true;
+		}
+	}
+	if (find == false)
+	{
+		list<Entity*> itemsInRoom;
+		FindByTypeAndPropietary(ITEM, itemsInRoom, GetRoom());
+
+		for (list<Entity*>::const_iterator it = itemsInRoom.begin(); it != itemsInRoom.cend() && find == false; ++it)
+		{
+			if (Same((*it)->name, args[1]))
+			{
+				Item* item = (Item*)(*it);
+				if (item->fixed == true)
+				{
+					item->Use(this, args);
+					find = true;
+				}
+			}
+		}
+	}
+	if (find == false)
+	{
+		cout << "You don\'t have this item!\n";
+	}
+}
+
+void Player::UseOn(const vector<string>& args)
+{
+	list<Entity*> items;
+	FindByTypeAndPropietary(ITEM, items, GetRoom());
+	bool find = false;
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend() && find == false; ++it)
+	{
+		if (Same((*it)->name, args[3]))
+		{
+			Item* item = (Item*)(*it);
+			item->Use(this, args);
+			find = true;
+		}
+	}
+	if (find == false)
+	{
+		cout << "There aren't any " << args[3] << ".\n";
+	}
+}
+
+void Player::CreateBookpage3() const
+{
+	myWorld->CreateBookpage3();
+}
+
+void Player::CreateKey1() const
+{
+	myWorld->CreateKey1();
 }
 
 Spell * Player::HaveSpellAndMana(const vector<string>& args)
@@ -208,7 +276,7 @@ void Player::Open(const vector<string>& args)
 		Exit* exit = (Exit*)(*it);
 		if (exit->name == args[1] || exit->GetDestination() == args[1])
 		{
-			exit->Open();
+			exit->Open(this);
 		}
 	}
 }
@@ -226,6 +294,19 @@ void Player::Go(const vector<string>& args)
 		{
 			cout << "You can't pass " + (args[1]) + " it's locked.\n";
 		}
+		else if(exit->condition != nullptr && exit->condition->type == MONSTER)
+		{
+			Monster* monster = (Monster*)exit->condition;
+			if (monster->IsAlive())
+			{
+				cout << "You can not go " << exit->name << ", " << monster->name << " is blocking the acces.\n";
+			}
+			else
+			{
+				ChangeParentTo(exit->GetDestinationByRoom(GetRoom()));
+				parent->Look();
+			}
+		}
 		else
 		{
 			ChangeParentTo(exit->GetDestinationByRoom(GetRoom()));
@@ -237,11 +318,19 @@ void Player::Go(const vector<string>& args)
 
 void Player::Take(const vector<string>& args)
 {	
-	Item* item = (Item*)GetItemByName(args[1]);
-
-	if (item != nullptr)
+	Item* item = (Item*)GetRoom()->GetItemByName(args[1]);
+	if (item == nullptr)
 	{
-		cout << "You already have " + item->name + ".\n";
+		item = (Item*)GetItemByName(args[1]);
+		if (item != nullptr)
+		{
+			cout << "You already have " + item->name + ".\n";
+		}
+		else
+		{
+			cout << "There aren't any item called " + (args[1]) + ".\n";
+		}
+		
 	}
 	else
 	{

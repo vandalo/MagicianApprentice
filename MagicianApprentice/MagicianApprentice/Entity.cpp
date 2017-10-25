@@ -49,7 +49,7 @@ void Entity::FindByTypeAndPropietary(EntityType type, list<Entity*>& entity_list
 			{
 				entity_list.push_back(*it);
 			}
-			else if(Same(propietari_name, (*it)->parent->name))
+			else if((*it)->parent != nullptr && Same(propietari_name, (*it)->parent->name))
 			{
 				entity_list.push_back(*it);
 			}

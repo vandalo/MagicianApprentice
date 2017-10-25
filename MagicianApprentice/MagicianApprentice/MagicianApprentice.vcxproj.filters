@@ -19,6 +19,9 @@
     <Filter Include="Spells">
       <UniqueIdentifier>{a88f917c-0906-44d0-a2c8-24ef494ca0da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Usable">
+      <UniqueIdentifier>{7b007fa4-b3cb-4997-85bf-26c48af8c86b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,6 +66,18 @@
     <ClCompile Include="Exura.cpp">
       <Filter>Spells</Filter>
     </ClCompile>
+    <ClCompile Include="Potion.cpp">
+      <Filter>Usable</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>Usable</Filter>
+    </ClCompile>
+    <ClCompile Include="Bottle.cpp">
+      <Filter>Usable</Filter>
+    </ClCompile>
+    <ClCompile Include="Fireplace.cpp">
+      <Filter>Usable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -106,6 +121,18 @@
     </ClInclude>
     <ClInclude Include="Exura.h">
       <Filter>Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="Potion.h">
+      <Filter>Usable</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>Usable</Filter>
+    </ClInclude>
+    <ClInclude Include="Bottle.h">
+      <Filter>Usable</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireplace.h">
+      <Filter>Usable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

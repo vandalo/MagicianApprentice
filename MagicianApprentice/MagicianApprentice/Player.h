@@ -9,11 +9,12 @@
 class Room;
 class Monster;
 class Spell;
+class World;
 
 class Player : public Creature
 {
 public:
-	Player(const char* name, const char* description, Entity* parent);
+	Player(const char* name, const char* description, Entity* parent, World* myWorld);
 	~Player();
 
 	void Look(const vector<string>& args) const;
@@ -26,10 +27,15 @@ public:
 	int GetHp();
 	int GetMaxHp();
 	bool Atack();
-	unsigned int reciveAtack(unsigned int damage);
+	unsigned int ReciveAtack(unsigned int damage);
 	void UseSpell(const vector<string>& args);
-	void updateMana(int mana);
-	void updateHp(int hp);
+	void UpdateMana(int mana);
+	void UpdateHp(int hp);
+	void Use(const vector<string>& args);
+	void UseOn(const vector<string>& args);
+
+	void CreateBookpage3() const;
+	void CreateKey1() const;
 
 private:
 	Spell* HaveSpellAndMana(const vector<string>& args);
@@ -39,6 +45,7 @@ private:
 	unsigned int hp = 0;
 	unsigned int maxHp = 0;
 	unsigned int mana = 0;
+	World* myWorld = nullptr;
 };
 
 #endif

@@ -139,34 +139,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bottle.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Exura.cpp" />
+    <ClCompile Include="Fireplace.cpp" />
     <ClCompile Include="Ignite.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Spell.cpp" />
     <ClCompile Include="Spider.cpp" />
+    <ClCompile Include="Stair.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bottle.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Exura.h" />
+    <ClInclude Include="Fireplace.h" />
     <ClInclude Include="Ignite.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Potion.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Spell.h" />
     <ClInclude Include="Spider.h" />
+    <ClInclude Include="Stair.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

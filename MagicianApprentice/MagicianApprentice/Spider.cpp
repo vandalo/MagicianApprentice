@@ -48,7 +48,7 @@ bool Spider::Atack()
 				Player* player = (Player*)(*it);
 				if (player->GetHp() * 100 / player->GetMaxHp() > 75)
 				{
-					unsigned int damage = player->reciveAtack(atack);
+					unsigned int damage = player->ReciveAtack(atack);
 					cout << "\nThe " << name << " deals you " << damage << " hitpoints.\n";
 					ret = true;
 				}

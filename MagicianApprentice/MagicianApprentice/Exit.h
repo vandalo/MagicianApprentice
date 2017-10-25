@@ -6,6 +6,7 @@
 #include "Entity.h"
 
 class Room;
+class Player;
 
 class Exit : public Entity
 {
@@ -19,18 +20,15 @@ public:
 	const string GetNameByRoom(const Room * room) const;
 	Room* GetDestinationByRoom(const Room * room) const;
 	const string GetDestination() const;
-	void Open();
+	void Open(Player* player);
 	
 public:
 	bool closed;
+	Entity* condition;
 
 private:
 	const char* destinationName = nullptr;
 	Room* destination = nullptr;
-
-	
-	Entity* condition;
-
 };
 
 #endif

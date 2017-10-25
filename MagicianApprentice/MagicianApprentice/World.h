@@ -23,6 +23,9 @@ public:
 	bool ParseCommand(vector<string>& args);
 	bool GameLoop();
 
+	void CreateBookpage3();
+	void CreateKey1();
+
 private:
 	string Introduction();
 private:

@@ -2,6 +2,7 @@
 #include "Room.h"
 #include "Exit.h"
 #include "Player.h"
+#include "Monster.h"
 
 
 Exit::Exit(const char * name, const char * description, const char * destinationName, Room* origin, Room *destination, bool closed, Entity* condition) :
@@ -65,7 +66,7 @@ const string Exit::GetDestination() const
 	
 }
 
-void Exit::Open()
+void Exit::Open(Player* playerIn)
 {
 	if (condition == nullptr)
 	{
@@ -85,4 +86,36 @@ void Exit::Open()
 			cout << "Only the healthy's can open " << destinationName << ".\n";
 		}
 	}
+	else if (condition->type == MONSTER)
+	{
+		Monster* monster = (Monster*)condition;
+		if (monster->IsAlive())
+		{
+			cout << "You can not open, " << monster->name << " is blocking the acces.\n";
+		}
+		else
+		{
+			closed = false;
+			cout << "The " << name << " is open now.\n";
+		}
+	}
+	else if (condition->type == ITEM)
+	{
+		Item* item = (Item*)condition;
+		list<Entity*> items;
+		FindByTypeAndPropietary(ITEM, items, playerIn);
+		for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+		{
+			if (condition->name ==  (*it)->name)
+			{
+				closed = false;
+				cout << "The " << name << " is open now.\n";
+			}
+		}
+		if (closed)
+		{
+			cout << "You can\'t open the " << name << ".\n";
+		}
+	}
+	
 }

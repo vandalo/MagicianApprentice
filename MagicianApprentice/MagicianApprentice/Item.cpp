@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Room.h"
 #include "Item.h"
+#include "Player.h"
 
 
 Item::Item(const char* name, const char* description, Entity* parent, Entity* must, bool fix) :
@@ -14,7 +15,11 @@ Item::~Item()
 {}
 
 void Item::Look() const {
-	cout << name << "\n";
+	cout << name;
+	if (name.length() > 0)
+	{
+		cout << "\n";
+	}
 	cout << description << "\n";
 
 	//Print items if it have items inside
@@ -28,4 +33,9 @@ void Item::Look() const {
 		}
 	}
 	cout << "\n";
+}
+
+void Item::Use(Player* player, const vector<string>& args)
+{
+	cout << "This item can\'t not be used!\n";
 }

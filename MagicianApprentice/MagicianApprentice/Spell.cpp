@@ -19,7 +19,6 @@ void Spell::Look() const {
 	cout << description << "\n";
 	cout << "It costs " << mana << " mana points.\n";
 	cout << "It have 10 seconds of cooldown.\n";
-	cout << "\n";
 }
 
 bool Spell::Update()

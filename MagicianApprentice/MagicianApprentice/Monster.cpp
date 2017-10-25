@@ -36,7 +36,7 @@ bool Monster::Atack()
 	return true;
 }
 
-unsigned int Monster::reciveAtack(unsigned int damage)
+unsigned int Monster::ReciveAtack(unsigned int damage)
 {
 	hp -= damage;
 	return damage;

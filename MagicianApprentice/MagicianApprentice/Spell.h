@@ -3,7 +3,7 @@
 
 #include <string>
 #include <list>
-#include "Entity.h"
+//#include "Entity.h"
 #include "Item.h"
 
 class Room;

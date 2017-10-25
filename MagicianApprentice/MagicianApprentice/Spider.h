@@ -15,7 +15,7 @@ public:
 	~Spider();
 
 	//void Look() const;
-	void Stats(const vector<string>& args) const;
+	//void Stats(const vector<string>& args) const;
 	Room* GetRoom() const;
 	int GetHp();
 	int GetMaxHp();

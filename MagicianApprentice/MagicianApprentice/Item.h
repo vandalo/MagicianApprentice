@@ -5,12 +5,15 @@
 #include <list>
 #include "Entity.h"
 
+class Player;
+
 class Item : public Entity
 {
 public:
 	Item(const char* name, const char* description, Entity* parent, Entity* must, bool fix);
 	~Item();
-	void Look() const;
+	virtual void Look() const;
+	virtual void Use(Player* player, const vector<string>& args);
 	//bool Update();
 
 public:

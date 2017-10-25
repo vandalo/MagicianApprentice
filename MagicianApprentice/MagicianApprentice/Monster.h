@@ -20,7 +20,7 @@ public:
 	int GetHp();
 	int GetMaxHp();
 	bool Atack();
-	unsigned int reciveAtack(unsigned int damage);
+	unsigned int ReciveAtack(unsigned int damage);
 
 public:
 	const char* information;

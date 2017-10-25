@@ -10,7 +10,7 @@ Exura::Exura(const char* name, const char* description, Entity* parent, Entity* 
 
 void Exura::effect(Player * player)
 {
-	player->updateHp(30);
-	player->updateMana(-(int)mana);
+	player->UpdateHp(30);
+	player->UpdateMana(-(int)mana);
 	cdTime = cd;
 }
