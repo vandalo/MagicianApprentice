@@ -10,7 +10,7 @@ Potion::Potion(const char* name, const char* description, Entity* parent, Entity
 	used = false;
 }
 
-void Potion::Use(Player * player)
+void Potion::Use(Player * player, const vector<string>& args)
 {
 	if (used == false)
 	{

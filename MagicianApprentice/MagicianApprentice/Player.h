@@ -38,6 +38,7 @@ public:
 
 	void CreateBookpage3() const;
 	void CreateKey1() const;
+	void CreateSecretExit() const;
 
 private:
 	Spell* HaveSpellAndMana(const vector<string>& args);

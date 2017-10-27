@@ -19,6 +19,7 @@
 #include "GiantSpider.h"
 #include "Emitwols.h"
 #include "Dragon.h"
+#include "Picture.h"
 
 World::World()
 {}
@@ -55,6 +56,19 @@ bool World::GameLoop()
 		timer = now;
 	}
 	return ret;
+}
+
+bool World::Win()
+{
+	bool find = false;
+	for (list<Entity*>::const_iterator it = player->container.begin(); it != player->container.cend() && find == false; ++it)
+	{
+		if (Same((*it)->name, "DragonGem"))
+		{
+			find = true;
+		}
+	}
+	return find;
 }
 
 bool World::ParseCommand(vector<string>& args)
@@ -115,6 +129,10 @@ bool World::ParseCommand(vector<string>& args)
 			}
 		}
 		else if (Same(args[0], "use"))
+		{
+			player->Use(args);
+		}
+		else if (Same(args[0], "move"))
 		{
 			player->Use(args);
 		}
@@ -192,7 +210,7 @@ bool World::Init() {
 
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", secretPasage, this);
+	player = new Player(name.c_str(), "You are a magician apprentice", forest, this);
 	entities.push_back(player);
 
 	//Monsters
@@ -206,7 +224,7 @@ bool World::Init() {
 	entities.push_back(dragon);
 
 	//Items from player since start
-	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
+	Item *document = new Item("Document", "Description:\nMany year ago, my family used to live in the castle situated at the north of the Zental village.\nMy father, was an archeologist and in one of his expeditions he found the legendary DragonGem.\nOne day the gem started to shine stronger than normal and strange creatures started to appear in to the room.\nMy family had to leave the castle forever.\n\nMission:\nFind the DragonGem so the council can keep it in a save place\nand give to this family the opportunity of going back to his castle.", player, nullptr, false);
 	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player, nullptr, false);
 	Item *doorSign = new Item("Sign", "Only the helthy people can enter the castle!", door, nullptr, true);
 	Item *table = new Item("Table", "You can see a table in the middle of the library!", library, nullptr, true);
@@ -214,21 +232,21 @@ bool World::Init() {
 	Item *ink = new Item("Ink", "You can see a pot of black ink. The pot have the draw of a dragon", table, nullptr, true);
 	Item *lamp = new Item("Lamp", "You can see a lamp. It\'s very old it should not work.", table, nullptr, true);
 	Item *stick = new Item("Stick", "You can see a Stick. This stick should be able to break any chain.", room, giantSpiderRoom, false);
+	Item *dragonGem = new Item("DragonGem", "You can see a DragonGem. This gem is what you are looking for.", catacombs, dragon, false);
 	Ignite *sbPage1 = new Ignite("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nYou will deal 10 damage.", spellbook, spellbook, 10, 10, "ignite");
 	Exura *sbPage2 = new Exura("Bookpage2", "Exura: This spell restore you hit points.\nYou will get 30 hp.", door, spellbook, 20, 10, "exura");
-	Emitwols *sbPage4 = new Emitwols("Bookpage4", "Emitwols: This spell doubles forever the cooldown of the monsters in the room", spellbook, spellbook, 20, 20, "emitwols");
+	Emitwols *sbPage4 = new Emitwols("Bookpage4", "Emitwols: This spell doubles forever the cooldown of the monsters in the room", hiddenRoom, spellbook, 20, 20, "emitwols");
 	Stair *stair = new Stair("Stair", "You can see an stair, it should help to get the books from the top of the shelf.", library, nullptr, true);
 	Bottle *bottle = new Bottle("Bottle", "You can see a glass bottle.", kitchen, nullptr, false);
 	Item *water = new Item("Water", "It\'s a crystaline water", kitchen, bottle, false);
 	Fireplace *fireplace = new Fireplace("Fireplace", "You can see and extremly beautifull fireplace", diningroom, water, true, true);
-	/**/
-	Tortolize* sbPage3 = new Tortolize("Bookpage3", "Tortolize: This spell will give you a shiled of 120 seconds of energy.\nAll the damage you recieve will decreace the shield time.", spellbook, spellbook, 10, 60, "tortolize");
-	entities.push_back(sbPage3);
-	/**/
+	Picture *picture = new Picture("Picture", "You see an aweomse picture. On the picture you can see the image of this castle many years ago.", secretPasage, nullptr, true);
+
 	Potion* potion1 = new Potion("Potion", "Use this potion will give you 50 mana points.", hall, nullptr, false);
 	Potion* potion2 = new Potion("Potion", "Use this potion will give you 50 mana points.", kitchen, nullptr, false);
+	Potion* potion3 = new Potion("Potion", "Use this potion will give you 50 mana points.", dungeon, nullptr, false);
 	//Temporal object to be replaced
-	Item *key= new Item("Key", "You can see a key. It\'s seems quite new, it must open a door.", player, nullptr, false);
+	Item *key= new Item("Key", "You can see a key. It\'s seems quite new, it must open a door.", neverAcces, nullptr, false);
 
 	entities.push_back(document);
 	entities.push_back(spellbook);
@@ -248,6 +266,9 @@ bool World::Init() {
 	entities.push_back(fireplace);
 	entities.push_back(key);
 	entities.push_back(stick);
+	entities.push_back(dragonGem);
+	entities.push_back(picture);
+	
 
 	//Exits
 	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, nullptr);
@@ -271,7 +292,7 @@ bool World::Init() {
 	Exit *DungeonToSecretPassage = new Exit("east", "You can see a light into the darkness. It looks like a path.", "path", dungeon, secretPasage, false, nullptr);
 	Exit *SecretPassageToDungeon = new Exit("west", "You can see the darkness of the dungeon at the end of the path.", "path", secretPasage, dungeon, false, nullptr);
 	Exit *HidenroomToSecretPassage = new Exit("south", "You can see a door. This door is in a great state.", "door", hiddenRoom, secretPasage, false, nullptr);
-	Exit *SecretPassageToHidenroom = new Exit("north", "You can see a door. This door was hidden behind the picture!", "door", secretPasage, hiddenRoom, false, nullptr);
+	Exit *SecretPassageToHidenroom = new Exit("north", "You can see a door. This door was hidden behind the picture!", "secret door", neverAcces, hiddenRoom, false, nullptr);
 	Exit *CatacombsToSecretPassage = new Exit("west", "You can see a light into the darkness. It looks like a path.", "door", catacombs, secretPasage, false, nullptr);
 	Exit *SecretPassageToCatacombs = new Exit("east", "You can see the path to something like catacombs.", "path", secretPasage, catacombs, false, nullptr);
 
@@ -318,7 +339,6 @@ void World::CreateBookpage3()
 			library = (*it);
 		}
 	}
-		
 	Tortolize* sbPage3 = new Tortolize("Bookpage3", "Tortolize: This spell will give you a shiled of 120 seconds of energy.\nAll the damage you recieve will decreace the shield time.", library, spellbook, 10, 60, "tortolize");
 	entities.push_back(sbPage3);
 }
@@ -341,4 +361,30 @@ void World::CreateKey1()
 			(*it)->ChangeParentTo(dinningroom);
 		}
 	}
+}
+
+void World::CreateSecretExit()
+{
+	Exit* secretExit = nullptr; //Secret pasage
+	Room* SecretPasage = nullptr;
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+	{
+		if ((*it)->type == EXIT)
+		{
+			Exit* exitTmp = (Exit*)(*it);
+			if(Same(exitTmp->parent->name, "neverAcces"))
+			{
+				secretExit = (Exit*)(*it);
+			}
+		}
+		if (Same((*it)->name, "Secret pasage"))
+		{
+			SecretPasage = (Room*)(*it);
+		}
+	}
+	if (secretExit != nullptr && SecretPasage != nullptr)
+	{
+		secretExit->ChangeParentTo(SecretPasage);
+	}
+
 }

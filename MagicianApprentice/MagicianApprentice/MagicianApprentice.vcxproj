@@ -152,6 +152,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Ignite.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Picture.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Room.h" />

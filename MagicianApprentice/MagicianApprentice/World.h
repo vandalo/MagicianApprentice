@@ -25,6 +25,8 @@ public:
 	bool PlayerIsAlive();
 	void CreateBookpage3();
 	void CreateKey1();
+	void CreateSecretExit();
+	bool Win();
 
 private:
 	string Introduction();

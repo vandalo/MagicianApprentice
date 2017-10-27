@@ -34,7 +34,7 @@ int main() {
 
 		while (1)
 		{
-			if (my_world.PlayerIsAlive())
+			if (my_world.PlayerIsAlive() && my_world.Win() == false)
 			{
 				if (_kbhit() != 0)
 				{
@@ -78,6 +78,11 @@ int main() {
 						cout << "> " << player_input;
 					}
 				}
+			}
+			else if (my_world.Win())
+			{
+				cout << "\n\n\nCongratulation!!\nYou have fighted alone on this old castle to recover the DragonGem and you achived it. It means that\nyou have pass the exam and you becomes a professional magician! \n";
+				cout << "\n\nThanks for playing  Magician Apprentice I hope you enjoy the experience of playing this game\nand remember that you can find many more games on\nhttps://github.com/vandalo/\n";
 			}
 			else
 			{

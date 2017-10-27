@@ -12,7 +12,7 @@ class Potion : public Item
 
 public:
 	Potion(const char* name, const char* description, Entity* parent, Entity* must, bool fix);
-	void Use(Player* player);
+	void Use(Player* player, const vector<string>& args);
 
 public:
 	bool used;

@@ -174,6 +174,11 @@ void Player::CreateKey1() const
 	myWorld->CreateKey1();
 }
 
+void Player::CreateSecretExit() const
+{
+	myWorld->CreateSecretExit();
+}
+
 Spell * Player::HaveSpellAndMana(const vector<string>& args)
 {
 	bool haveSpell = false;

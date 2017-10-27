@@ -90,6 +90,9 @@
     <ClCompile Include="Dragon.cpp">
       <Filter>Creatures</Filter>
     </ClCompile>
+    <ClCompile Include="Picture.cpp">
+      <Filter>Usable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="Dragon.h">
       <Filter>Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Picture.h">
+      <Filter>Usable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
