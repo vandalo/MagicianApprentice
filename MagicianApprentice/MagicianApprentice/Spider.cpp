@@ -16,8 +16,8 @@ Spider::Spider(const char* name, const char* description, Entity* parent) :
 	maxHp = 10;
 	mana = 0;
 	lvl = 1;
-	atack = 5;
-	information = "The spider atacks every five seconds while your heals points is higer than 75%.";
+	attack1 = 5;
+	information = "The spider attacks every five seconds while your heals points is higer than 75%.";
 	maxCooldown1 = 5;
 	cooldown1 = 5;
 }
@@ -48,7 +48,7 @@ bool Spider::Atack()
 				Player* player = (Player*)(*it);
 				if (player->GetHp() * 100 / player->GetMaxHp() > 75)
 				{
-					unsigned int damage = player->ReciveAtack(atack);
+					unsigned int damage = player->ReciveAtack(attack1);
 					cout << "\nThe " << name << " deals you " << damage << " hitpoints.\n";
 					ret = true;
 				}

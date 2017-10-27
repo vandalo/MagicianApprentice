@@ -27,6 +27,8 @@ public:
 	unsigned int maxCooldown1 = 0;
 	unsigned int cooldown2 = 0;
 	unsigned int maxCooldown2 = 0;
+	unsigned int attack1 = 0;
+	unsigned int attack2 = 0;
 	const char* information;
 };
 

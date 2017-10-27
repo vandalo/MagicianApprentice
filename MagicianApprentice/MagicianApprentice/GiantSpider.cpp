@@ -16,7 +16,7 @@ GiantSpider::GiantSpider(const char* name, const char* description, Entity* pare
 	maxHp = 30;
 	mana = 0;
 	lvl = 1;
-	atack = 15;
+	attack1 = 15;
 	information = "The Giant Spider atacks every five seconds.\n";
 	maxCooldown1 = 5;
 	cooldown1 = 5;
@@ -46,7 +46,7 @@ bool GiantSpider::Atack()
 			if ((*it)->type == PLAYER)
 			{
 				Player* player = (Player*)(*it);
-				unsigned int damage = player->ReciveAtack(atack);
+				unsigned int damage = player->ReciveAtack(attack1);
 				cout << "\nThe " << name << " deals you " << damage << " hitpoints.\n";
 				ret = true;
 				cooldown1 = maxCooldown1;

@@ -18,6 +18,7 @@
 #include "Tortolize.h"
 #include "GiantSpider.h"
 #include "Emitwols.h"
+#include "Dragon.h"
 
 World::World()
 {}
@@ -169,7 +170,7 @@ bool World::Init() {
 	Room *library = new Room("The library", "You are at the castle\'s library. The ceiling is very high.\nYou can see an enormous number of books. There is an stair to arrive to the books at the top of the shelfs.");
 	Room *room = new Room("Room", "You are at the castle’s main room. It\'s plenty of spider silks.");
 	Room *dungeon = new Room("Dungeon", "You are at the dungeon. There is a lot of darkness and it\'s hard to see arrownd.");
-	Room *secretPasage = new Room("Secret pasage", "You are in a secret pasage!\n The walls have torchs which guide you.");
+	Room *secretPasage = new Room("Secret pasage", "You are in a secret pasage!\nThe walls have torchs which guide you.");
 	Room *hiddenRoom = new Room("Hidden room", "You are in the secret office from the castle\'s owner.\nIt\'s georgious! Plenty of decoration, books and an awesome table.");
 	Room *catacombs = new Room("Catacombs", "There are many treasures here. You can see far away how it shines!");
 	Room *neverAcces = new Room("neverAcces", "neverAcces");
@@ -191,7 +192,7 @@ bool World::Init() {
 
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", firstfloor, this);
+	player = new Player(name.c_str(), "You are a magician apprentice", secretPasage, this);
 	entities.push_back(player);
 
 	//Monsters
@@ -201,6 +202,8 @@ bool World::Init() {
 	entities.push_back(spiderOfHall);
 	GiantSpider *giantSpiderRoom = new GiantSpider("GiantSpider", "You can see a giant spider", room);
 	entities.push_back(giantSpiderRoom);
+	Dragon *dragon = new Dragon("Dragon", "You can see a dragon", catacombs);
+	entities.push_back(dragon);
 
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
@@ -211,14 +214,17 @@ bool World::Init() {
 	Item *ink = new Item("Ink", "You can see a pot of black ink. The pot have the draw of a dragon", table, nullptr, true);
 	Item *lamp = new Item("Lamp", "You can see a lamp. It\'s very old it should not work.", table, nullptr, true);
 	Item *stick = new Item("Stick", "You can see a Stick. This stick should be able to break any chain.", room, giantSpiderRoom, false);
-	Ignite *sbPage1 = new Ignite("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nYou will deal 10 damage.", spellbook, spellbook, 20, 10, "ignite");
+	Ignite *sbPage1 = new Ignite("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nYou will deal 10 damage.", spellbook, spellbook, 10, 10, "ignite");
 	Exura *sbPage2 = new Exura("Bookpage2", "Exura: This spell restore you hit points.\nYou will get 30 hp.", door, spellbook, 20, 10, "exura");
 	Emitwols *sbPage4 = new Emitwols("Bookpage4", "Emitwols: This spell doubles forever the cooldown of the monsters in the room", spellbook, spellbook, 20, 20, "emitwols");
 	Stair *stair = new Stair("Stair", "You can see an stair, it should help to get the books from the top of the shelf.", library, nullptr, true);
 	Bottle *bottle = new Bottle("Bottle", "You can see a glass bottle.", kitchen, nullptr, false);
 	Item *water = new Item("Water", "It\'s a crystaline water", kitchen, bottle, false);
 	Fireplace *fireplace = new Fireplace("Fireplace", "You can see and extremly beautifull fireplace", diningroom, water, true, true);
-	
+	/**/
+	Tortolize* sbPage3 = new Tortolize("Bookpage3", "Tortolize: This spell will give you a shiled of 120 seconds of energy.\nAll the damage you recieve will decreace the shield time.", spellbook, spellbook, 10, 60, "tortolize");
+	entities.push_back(sbPage3);
+	/**/
 	Potion* potion1 = new Potion("Potion", "Use this potion will give you 50 mana points.", hall, nullptr, false);
 	Potion* potion2 = new Potion("Potion", "Use this potion will give you 50 mana points.", kitchen, nullptr, false);
 	//Temporal object to be replaced

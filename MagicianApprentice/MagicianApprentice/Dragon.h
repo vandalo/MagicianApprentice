@@ -1,5 +1,5 @@
-#ifndef __GiantSpider__
-#define __GiantSpider__
+#ifndef __Dragon__
+#define __Dragon__
 
 #include <string>
 #include <list>
@@ -8,11 +8,11 @@
 
 class Room;
 
-class GiantSpider : public Monster
+class Dragon : public Monster
 {
 public:
-	GiantSpider(const char* name, const char* description, Entity* parent);
-	~GiantSpider();
+	Dragon(const char* name, const char* description, Entity* parent);
+	~Dragon();
 
 	//void Look() const;
 	//void Stats(const vector<string>& args) const;

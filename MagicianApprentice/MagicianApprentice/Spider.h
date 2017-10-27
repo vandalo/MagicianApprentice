@@ -21,7 +21,6 @@ public:
 	bool Update();
 
 private:
-	unsigned int atack = 0;
 };
 
 #endif

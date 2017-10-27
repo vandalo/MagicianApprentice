@@ -77,9 +77,13 @@ void Monster::Stats() const
 	{
 		cout << name << " is hurt, ";
 	}
-	else
+	else if(lifePercent > 0)
 	{
 		cout << name << " is almost death, ";
+	}
+	else
+	{
+		cout << name << " is death, ";
 	}
 
 	cout << name << " have " << hp << "/" << maxHp << " hit points" << endl;
