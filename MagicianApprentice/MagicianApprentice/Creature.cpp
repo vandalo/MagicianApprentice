@@ -50,9 +50,10 @@ void Creature::Look() const
 {
 	cout << name << "\n";
 	cout << description << "\n";
+	Stats();
 }
 
-void Creature::Stats(const vector<string>& args) const
+void Creature::Stats() const
 {
 	int lifePercent = hp * 100 / maxHp;
 

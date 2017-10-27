@@ -34,50 +34,57 @@ int main() {
 
 		while (1)
 		{
-			if (_kbhit() != 0)
+			if (my_world.PlayerIsAlive())
 			{
-				key = _getch();
-				if (key == '\b') // backspace
+				if (_kbhit() != 0)
 				{
-					if (player_input.length() > 0)
+					key = _getch();
+					if (key == '\b') // backspace
 					{
-						player_input.pop_back();
-						cout << '\b';
-						cout << " ";
-						cout << '\b';
+						if (player_input.length() > 0)
+						{
+							player_input.pop_back();
+							cout << '\b';
+							cout << " ";
+							cout << '\b';
+						}
+					}
+					else if (key != '\r') // return
+					{
+						player_input += key;
+						cout << key;
+					}
+					else {
+						cout << "\n";
+						ParseInput(player_input, args);
 					}
 				}
-				else if (key != '\r') // return
+
+				if (args.size() > 0 && args[0] == "quit")
+					break;
+
+				if (args.size() > 0)
 				{
-					player_input += key;
-					cout << key;
+					if (my_world.ReadComand(args) == false)
+						cout << "Sorry, I do not understand your command.\n";
+
+					args.clear();
+					player_input = "";
+					cout << endl << "> ";
 				}
 				else {
-					cout << "\n";
-					ParseInput(player_input, args);
-				}					
-			}
-
-			if (args.size() > 0 && args[0] == "quit")
-				break;
-
-			if (args.size() > 0)
-			{
-				if (my_world.ReadComand(args) == false)
-					cout << "Sorry, I do not understand your command.\n";
-
-				args.clear();
-				player_input = "";
-				cout << endl << "> ";
-			}
-			else {
-				if (my_world.GameLoop())
-				{
-					cout << "> " << player_input;
+					if (my_world.GameLoop())
+					{
+						cout << "> " << player_input;
+					}
 				}
 			}
+			else
+			{
+				cout << "\nYou are death!\n";
+				break;
+			}
 		}
-
 		cout << "\nThanks for playing, Bye!\n";
 		system("pause");
 		return 0;

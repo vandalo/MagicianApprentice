@@ -49,7 +49,30 @@ bool Player::Atack()
 
 unsigned int Player::ReciveAtack(unsigned int damage)
 {
-	hp -= damage;
+	if (shield > 0)
+	{
+		if (shield > damage)
+		{
+			shield -= damage;
+			cout << "\nYou lose " + to_string(damage) + " shield points.";
+			damage = 0;
+		}
+		else
+		{
+			cout << "\nYou lose " + to_string(shield) + " shield points.";
+			damage -= shield;
+			shield = 0;
+
+		}
+	}
+	if (hp > damage)
+	{
+		hp -= damage;
+	}
+	else
+	{
+		hp = 0;
+	}
 	return damage;
 }
 

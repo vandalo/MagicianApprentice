@@ -1,0 +1,76 @@
+#include <iostream>
+#include "Utils.h"
+#include "GiantSpider.h"
+#include "Exit.h"
+#include "Room.h"
+#include "Item.h"
+#include "Player.h"
+#include <string>
+
+GiantSpider::GiantSpider(const char* name, const char* description, Entity* parent) :
+	Monster(name, description, parent)
+{
+	type = MONSTER;
+
+	hp = 30;
+	maxHp = 30;
+	mana = 0;
+	lvl = 1;
+	atack = 15;
+	information = "The Giant Spider atacks every five seconds.\n";
+	maxCooldown = 5;
+	cooldown = 5;
+}
+
+GiantSpider::~GiantSpider()
+{}
+
+int GiantSpider::GetHp()
+{
+	return hp;
+}
+
+int GiantSpider::GetMaxHp()
+{
+	return maxHp;
+}
+
+bool GiantSpider::Atack()
+{
+	bool ret = false;
+	if (cooldown <= 0)
+	{
+		Room* room = GetRoom();
+		for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
+		{
+			if ((*it)->type == PLAYER)
+			{
+				Player* player = (Player*)(*it);
+				unsigned int damage = player->ReciveAtack(atack);
+				cout << "\nThe " << name << " deals you " << damage << " hitpoints.\n";
+				ret = true;
+				cooldown = maxCooldown;
+			}
+		}
+	}
+	else
+	{
+		cooldown--;
+	}
+	return ret;
+}
+
+bool GiantSpider::Update()
+{
+	bool ret = false;
+	if (IsAlive())
+	{
+		ret = Atack();
+	}
+	return ret;
+}
+
+Room* GiantSpider::GetRoom() const
+{
+	return (Room*)parent;
+}

@@ -43,10 +43,6 @@ private:
 	Spell* HaveSpellAndMana(const vector<string>& args);
 
 private:
-	unsigned int lvl = 0;
-	unsigned int hp = 0;
-	unsigned int maxHp = 0;
-	unsigned int mana = 0;
 	unsigned int shield = 0;
 	World* myWorld = nullptr;
 };

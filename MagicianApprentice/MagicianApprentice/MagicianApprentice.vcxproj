@@ -145,6 +145,7 @@
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Exura.cpp" />
     <ClCompile Include="Fireplace.cpp" />
+    <ClCompile Include="GiantSpider.cpp" />
     <ClCompile Include="Ignite.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Exura.h" />
     <ClInclude Include="Fireplace.h" />
+    <ClInclude Include="GiantSpider.h" />
     <ClInclude Include="Ignite.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Monster.h" />

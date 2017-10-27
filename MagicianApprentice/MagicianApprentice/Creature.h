@@ -15,7 +15,7 @@ public:
 	~Creature();
 
 	void Look() const;
-	void Stats(const vector<string>& args) const;
+	void Stats() const;
 	Room* GetRoom() const;
 	int GetHp();
 	int GetMaxHp();

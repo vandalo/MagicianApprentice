@@ -22,7 +22,7 @@ public:
 	bool ReadComand(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
 	bool GameLoop();
-
+	bool PlayerIsAlive();
 	void CreateBookpage3();
 	void CreateKey1();
 

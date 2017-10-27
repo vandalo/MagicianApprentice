@@ -16,6 +16,7 @@
 #include "Bottle.h"
 #include "Fireplace.h"
 #include "Tortolize.h"
+#include "GiantSpider.h"
 
 World::World()
 {}
@@ -129,6 +130,10 @@ bool World::ParseCommand(vector<string>& args)
 	return ret;
 }
 
+bool World::PlayerIsAlive() {
+	return player->IsAlive();
+}
+
 string World::Introduction()
 {
 	cout << "Welcome dear... Oh, wait... Can you remember your name\?\n";
@@ -184,7 +189,7 @@ bool World::Init() {
 	entities.push_back(neverAcces);
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", library, this);
+	player = new Player(name.c_str(), "You are a magician apprentice", firstfloor, this);
 	entities.push_back(player);
 
 	//Items from player since start
@@ -205,7 +210,7 @@ bool World::Init() {
 	Fireplace *fireplace = new Fireplace("Fireplace", "You can see and extremly beautifull fireplace", diningroom, water, true, true);
 
 	//Temporal object to be replaced
-	Item *key= new Item("Key", "You can see a key. It\'s seems quite new, it must open a door.", neverAcces, nullptr, false);
+	Item *key= new Item("Key", "You can see a key. It\'s seems quite new, it must open a door.", player, nullptr, false);
 
 	entities.push_back(document);
 	entities.push_back(spellbook);
@@ -222,7 +227,6 @@ bool World::Init() {
 	entities.push_back(bottle);
 	entities.push_back(water);
 	entities.push_back(fireplace);
-
 	entities.push_back(key);
 
 
@@ -231,6 +235,8 @@ bool World::Init() {
 	entities.push_back(spiderOfBridge);
 	Spider *spiderOfHall = new Spider("Spider", "You can see an spider", hall);
 	entities.push_back(spiderOfHall);
+	GiantSpider *giantSpiderRoom = new GiantSpider("GiantSpider","You can see a giant spider",room);
+	entities.push_back(giantSpiderRoom);
 
 	//Exits
 	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, nullptr);
@@ -248,6 +254,7 @@ bool World::Init() {
 	Exit *FirstfloorToLibrery = new Exit("west", "You can see an opened door and something like a library behind", "door", firstfloor, library, false, nullptr);
 	Exit *LibreryToFirstfloor = new Exit("east", "You can see an opened door and the first floor room behind", "door", library, firstfloor, false, nullptr);
 	Exit *FirstfloorToRoom = new Exit("east", "You can see a door. This door is quite elegant.", "door", firstfloor, room, true, key);
+	Exit *RoomToFirstfloor = new Exit("west", "You can see a door. This door is quite elegant.", "door", room, firstfloor, false, nullptr);
 
 	entities.push_back(forestToBridge);
 	entities.push_back(bridgeToForest);
@@ -262,8 +269,7 @@ bool World::Init() {
 	entities.push_back(FirstfloorToHall);
 	entities.push_back(FirstfloorToLibrery);
 	entities.push_back(LibreryToFirstfloor);
-
-	
+	entities.push_back(RoomToFirstfloor);
 
 	return true;
 }
