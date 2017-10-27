@@ -17,6 +17,7 @@
 #include "Fireplace.h"
 #include "Tortolize.h"
 #include "GiantSpider.h"
+#include "Emitwols.h"
 
 World::World()
 {}
@@ -73,7 +74,7 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			cout << "You must say where you want to go.\n";
 		}
-		else if (Same(args[0], "east") || Same(args[0], "west") || Same(args[0], "north") || Same(args[0], "south") || Same(args[0], "up"))
+		else if (Same(args[0], "east") || Same(args[0], "west") || Same(args[0], "north") || Same(args[0], "south") || Same(args[0], "up") || Same(args[0], "down"))
 		{
 			args.push_back(args[0]);
 			args[0] = "go";
@@ -87,7 +88,7 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			cout << "You must say what you want to take.\n";
 		}
-		else if (Same(args[0], "ignite") || Same(args[0], "exura") || Same(args[0], "tortolize"))
+		else if (Same(args[0], "ignite") || Same(args[0], "exura") || Same(args[0], "tortolize") || Same(args[0], "emitwols"))
 		{
 			player->UseSpell(args);
 		}
@@ -187,10 +188,19 @@ bool World::Init() {
 	entities.push_back(hiddenRoom);
 	entities.push_back(catacombs);
 	entities.push_back(neverAcces);
+
 	//Player creation
 	string name = Introduction().c_str();
 	player = new Player(name.c_str(), "You are a magician apprentice", firstfloor, this);
 	entities.push_back(player);
+
+	//Monsters
+	Spider *spiderOfBridge = new Spider("Spider", "You can see an spider", bridge);
+	entities.push_back(spiderOfBridge);
+	Spider *spiderOfHall = new Spider("Spider", "You can see an spider", hall);
+	entities.push_back(spiderOfHall);
+	GiantSpider *giantSpiderRoom = new GiantSpider("GiantSpider", "You can see a giant spider", room);
+	entities.push_back(giantSpiderRoom);
 
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
@@ -200,15 +210,17 @@ bool World::Init() {
 	Item *kitchenTable = new Item("Table", "This table is full of coocking items.", kitchen, nullptr, true);
 	Item *ink = new Item("Ink", "You can see a pot of black ink. The pot have the draw of a dragon", table, nullptr, true);
 	Item *lamp = new Item("Lamp", "You can see a lamp. It\'s very old it should not work.", table, nullptr, true);
-	Potion* potion1 = new Potion("Potion", "Use this potion will give you 50 mana points.", hall, nullptr, false);
-	Potion* potion2 = new Potion("Potion", "Use this potion will give you 50 mana points.", kitchen, nullptr, false);
+	Item *stick = new Item("Stick", "You can see a Stick. This stick should be able to break any chain.", room, giantSpiderRoom, false);
 	Ignite *sbPage1 = new Ignite("Bookpage1", "Ignite: This spell throws a flame to the enemy.\nYou will deal 10 damage.", spellbook, spellbook, 20, 10, "ignite");
 	Exura *sbPage2 = new Exura("Bookpage2", "Exura: This spell restore you hit points.\nYou will get 30 hp.", door, spellbook, 20, 10, "exura");
+	Emitwols *sbPage4 = new Emitwols("Bookpage4", "Emitwols: This spell doubles forever the cooldown of the monsters in the room", spellbook, spellbook, 20, 20, "emitwols");
 	Stair *stair = new Stair("Stair", "You can see an stair, it should help to get the books from the top of the shelf.", library, nullptr, true);
 	Bottle *bottle = new Bottle("Bottle", "You can see a glass bottle.", kitchen, nullptr, false);
 	Item *water = new Item("Water", "It\'s a crystaline water", kitchen, bottle, false);
 	Fireplace *fireplace = new Fireplace("Fireplace", "You can see and extremly beautifull fireplace", diningroom, water, true, true);
-
+	
+	Potion* potion1 = new Potion("Potion", "Use this potion will give you 50 mana points.", hall, nullptr, false);
+	Potion* potion2 = new Potion("Potion", "Use this potion will give you 50 mana points.", kitchen, nullptr, false);
 	//Temporal object to be replaced
 	Item *key= new Item("Key", "You can see a key. It\'s seems quite new, it must open a door.", player, nullptr, false);
 
@@ -216,6 +228,7 @@ bool World::Init() {
 	entities.push_back(spellbook);
 	entities.push_back(sbPage1);
 	entities.push_back(sbPage2);
+	entities.push_back(sbPage4);
 	entities.push_back(doorSign);
 	entities.push_back(potion1);
 	entities.push_back(potion2);
@@ -228,15 +241,7 @@ bool World::Init() {
 	entities.push_back(water);
 	entities.push_back(fireplace);
 	entities.push_back(key);
-
-
-	//Monsters
-	Spider *spiderOfBridge = new Spider("Spider", "You can see an spider", bridge);
-	entities.push_back(spiderOfBridge);
-	Spider *spiderOfHall = new Spider("Spider", "You can see an spider", hall);
-	entities.push_back(spiderOfHall);
-	GiantSpider *giantSpiderRoom = new GiantSpider("GiantSpider","You can see a giant spider",room);
-	entities.push_back(giantSpiderRoom);
+	entities.push_back(stick);
 
 	//Exits
 	Exit *forestToBridge = new Exit("east", "This is a sandy road which arrives until the bridge", "bridge", forest, bridge, false, nullptr);
@@ -255,12 +260,21 @@ bool World::Init() {
 	Exit *LibreryToFirstfloor = new Exit("east", "You can see an opened door and the first floor room behind", "door", library, firstfloor, false, nullptr);
 	Exit *FirstfloorToRoom = new Exit("east", "You can see a door. This door is quite elegant.", "door", firstfloor, room, true, key);
 	Exit *RoomToFirstfloor = new Exit("west", "You can see a door. This door is quite elegant.", "door", room, firstfloor, false, nullptr);
+	Exit *HallToDungeon = new Exit("down", "You can see an old door. This door seams old, you may force.", "door", hall, dungeon, true, stick);
+	Exit *DungeonToHall = new Exit("up", "You can see an old door. This door seams old.", "door", dungeon, hall, false, nullptr);
+	Exit *DungeonToSecretPassage = new Exit("east", "You can see a light into the darkness. It looks like a path.", "path", dungeon, secretPasage, false, nullptr);
+	Exit *SecretPassageToDungeon = new Exit("west", "You can see the darkness of the dungeon at the end of the path.", "path", secretPasage, dungeon, false, nullptr);
+	Exit *HidenroomToSecretPassage = new Exit("south", "You can see a door. This door is in a great state.", "door", hiddenRoom, secretPasage, false, nullptr);
+	Exit *SecretPassageToHidenroom = new Exit("north", "You can see a door. This door was hidden behind the picture!", "door", secretPasage, hiddenRoom, false, nullptr);
+	Exit *CatacombsToSecretPassage = new Exit("west", "You can see a light into the darkness. It looks like a path.", "door", catacombs, secretPasage, false, nullptr);
+	Exit *SecretPassageToCatacombs = new Exit("east", "You can see the path to something like catacombs.", "path", secretPasage, catacombs, false, nullptr);
 
 	entities.push_back(forestToBridge);
 	entities.push_back(bridgeToForest);
 	entities.push_back(bridgeToDoor);
 	entities.push_back(doorToBridge);
 	entities.push_back(doorToHall);
+	entities.push_back(HallToDoor);
 	entities.push_back(HallToKitchen);
 	entities.push_back(KitchenToHall);
 	entities.push_back(HallToDiningroom);
@@ -269,7 +283,16 @@ bool World::Init() {
 	entities.push_back(FirstfloorToHall);
 	entities.push_back(FirstfloorToLibrery);
 	entities.push_back(LibreryToFirstfloor);
+	entities.push_back(FirstfloorToRoom);
 	entities.push_back(RoomToFirstfloor);
+	entities.push_back(HallToDungeon);
+	entities.push_back(DungeonToHall);
+	entities.push_back(DungeonToSecretPassage);
+	entities.push_back(SecretPassageToDungeon);
+	entities.push_back(HidenroomToSecretPassage);
+	entities.push_back(SecretPassageToHidenroom);
+	entities.push_back(CatacombsToSecretPassage);
+	entities.push_back(SecretPassageToCatacombs);
 
 	return true;
 }

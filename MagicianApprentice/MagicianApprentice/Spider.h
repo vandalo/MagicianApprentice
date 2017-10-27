@@ -14,8 +14,6 @@ public:
 	Spider(const char* name, const char* description, Entity* parent);
 	~Spider();
 
-	//void Look() const;
-	//void Stats(const vector<string>& args) const;
 	Room* GetRoom() const;
 	int GetHp();
 	int GetMaxHp();
@@ -23,13 +21,7 @@ public:
 	bool Update();
 
 private:
-	/*unsigned int lvl = 0;
-	unsigned int hp = 0;
-	unsigned int maxHp = 0;
-	unsigned int mana = 0;*/
 	unsigned int atack = 0;
-	unsigned int cooldown = 0;
-	unsigned int maxCooldown = 0;
 };
 
 #endif

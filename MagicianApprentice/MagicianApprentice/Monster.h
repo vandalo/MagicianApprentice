@@ -23,6 +23,10 @@ public:
 	unsigned int ReciveAtack(unsigned int damage);
 
 public:
+	unsigned int cooldown1 = 0;
+	unsigned int maxCooldown1 = 0;
+	unsigned int cooldown2 = 0;
+	unsigned int maxCooldown2 = 0;
 	const char* information;
 };
 

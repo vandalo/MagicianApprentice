@@ -27,6 +27,8 @@ public:
 	unsigned int hp = 0;
 	unsigned int maxHp = 0;
 	unsigned int mana = 0;
+	unsigned int cooldown = 0;
+	unsigned int maxCooldown = 0;
 };
 
 #endif

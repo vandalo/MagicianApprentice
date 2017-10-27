@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Bottle.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="Emitwols.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Exura.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Bottle.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Emitwols.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Exura.h" />

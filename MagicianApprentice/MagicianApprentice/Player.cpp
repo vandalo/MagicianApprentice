@@ -396,23 +396,40 @@ void Player::Take(const vector<string>& args)
 			}
 			else
 			{
-				list<Entity*> items;
-				FindByTypeAndPropietary(ITEM, items, (Entity*)this);
-				FindByTypeAndPropietary(SPELL, items, (Entity*)this);
-				bool find = false;
-				for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+				if (item->must->type == ITEM)
 				{
-					if ((*it)->name == item->must->name)
+					list<Entity*> items;
+					FindByTypeAndPropietary(ITEM, items, (Entity*)this);
+					FindByTypeAndPropietary(SPELL, items, (Entity*)this);
+					bool find = false;
+					for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 					{
-						item->ChangeParentTo(*it);
-						cout << "You added " + item->name + " to your " + (*it)->name + ".\n";
-						find = true;
+						if ((*it)->name == item->must->name)
+						{
+							item->ChangeParentTo(*it);
+							cout << "You added " + item->name + " to your " + (*it)->name + ".\n";
+							find = true;
+						}
+					}
+					if (find != true)
+					{
+						cout << "You can't take " + (args[1]) + ".\n";
 					}
 				}
-				if (find != true)
+				else if (item->must->type == MONSTER)
 				{
-					cout << "You can't take " + (args[1]) + ".\n";
+					Monster* monster = (Monster*)item->must;
+					if (monster->IsAlive())
+					{
+						cout << "You can't take " + (args[1]) + ", " << monster->name <<" is protecting it.\n";
+					}
+					else
+					{
+						item->ChangeParentTo(this);
+						cout << "You added " + item->name + " to your inventory.\n";
+					}
 				}
+				
 			}
 		}
 	}

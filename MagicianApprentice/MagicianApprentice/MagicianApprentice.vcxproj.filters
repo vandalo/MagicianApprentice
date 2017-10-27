@@ -84,6 +84,9 @@
     <ClCompile Include="GiantSpider.cpp">
       <Filter>Creatures</Filter>
     </ClCompile>
+    <ClCompile Include="Emitwols.cpp">
+      <Filter>Spells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="GiantSpider.h">
       <Filter>Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitwols.h">
+      <Filter>Spells</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

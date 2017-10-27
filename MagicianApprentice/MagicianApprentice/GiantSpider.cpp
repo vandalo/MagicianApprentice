@@ -18,8 +18,8 @@ GiantSpider::GiantSpider(const char* name, const char* description, Entity* pare
 	lvl = 1;
 	atack = 15;
 	information = "The Giant Spider atacks every five seconds.\n";
-	maxCooldown = 5;
-	cooldown = 5;
+	maxCooldown1 = 5;
+	cooldown1 = 5;
 }
 
 GiantSpider::~GiantSpider()
@@ -38,7 +38,7 @@ int GiantSpider::GetMaxHp()
 bool GiantSpider::Atack()
 {
 	bool ret = false;
-	if (cooldown <= 0)
+	if (cooldown1 <= 0)
 	{
 		Room* room = GetRoom();
 		for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
@@ -49,13 +49,13 @@ bool GiantSpider::Atack()
 				unsigned int damage = player->ReciveAtack(atack);
 				cout << "\nThe " << name << " deals you " << damage << " hitpoints.\n";
 				ret = true;
-				cooldown = maxCooldown;
+				cooldown1 = maxCooldown1;
 			}
 		}
 	}
 	else
 	{
-		cooldown--;
+		cooldown1--;
 	}
 	return ret;
 }

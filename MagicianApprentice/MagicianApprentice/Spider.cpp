@@ -18,8 +18,8 @@ Spider::Spider(const char* name, const char* description, Entity* parent) :
 	lvl = 1;
 	atack = 5;
 	information = "The spider atacks every five seconds while your heals points is higer than 75%.";
-	maxCooldown = 5;
-	cooldown = 5;
+	maxCooldown1 = 5;
+	cooldown1 = 5;
 }
 
 Spider::~Spider()
@@ -38,7 +38,7 @@ int Spider::GetMaxHp()
 bool Spider::Atack()
 {
 	bool ret = false;
-	if (cooldown <= 0)
+	if (cooldown1 <= 0)
 	{
 		Room* room = GetRoom();
 		for (list<Entity*>::const_iterator it = room->container.begin(); it != room->container.cend(); ++it)
@@ -54,11 +54,11 @@ bool Spider::Atack()
 				}
 			}
 		}
-		cooldown = maxCooldown;
+		cooldown1 = maxCooldown1;
 	}
 	else
 	{
-		cooldown--;
+		cooldown1--;
 	}
 	return ret;
 }	
