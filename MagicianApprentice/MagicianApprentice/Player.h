@@ -18,7 +18,7 @@ public:
 	~Player();
 
 	void Look(const vector<string>& args) const;
-	void Stats(const vector<string>& args) const;
+	void Stats() const;
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
 	Room* GetRoom() const;
@@ -29,8 +29,10 @@ public:
 	bool Atack();
 	unsigned int ReciveAtack(unsigned int damage);
 	void UseSpell(const vector<string>& args);
+	bool Update() override;
 	void UpdateMana(int mana);
 	void UpdateHp(int hp);
+	void UpdateShield(int shieldPoints);
 	void Use(const vector<string>& args);
 	void UseOn(const vector<string>& args);
 
@@ -45,6 +47,7 @@ private:
 	unsigned int hp = 0;
 	unsigned int maxHp = 0;
 	unsigned int mana = 0;
+	unsigned int shield = 0;
 	World* myWorld = nullptr;
 };
 

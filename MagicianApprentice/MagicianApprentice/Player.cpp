@@ -18,6 +18,7 @@ Player::Player(const char* name, const char* description, Entity* parent, World*
 	maxHp = 50;
 	mana = 100;
 	lvl = 1;
+	shield = 0;
 }
 
 Player::~Player()
@@ -31,6 +32,14 @@ int Player::GetHp()
 int Player::GetMaxHp()
 {
 	return maxHp;
+}
+
+bool Player::Update() {
+	if (shield > 0)
+	{
+		shield--;
+	}
+	return false;
 }
 
 bool Player::Atack()
@@ -60,11 +69,18 @@ void Player::UpdateMana(int manaMod)
 
 void Player::UpdateHp(int hpMod)
 {
+	int hpStart = hp;
 	hp += hpMod;
 	if(hp > maxHp)
 	{
 		hp = maxHp;
+		cout << "You healed " << hp - hpStart <<" hp.\n";
 	}
+}
+
+void Player::UpdateShield(int shieldPoints)
+{
+	shield += shieldPoints;
 }
 
 void Player::Use(const vector<string>& args)
@@ -224,6 +240,7 @@ void Player::Look(const vector<string>& args) const
 		{
 			cout << name << "\n";
 			cout << description << "\n";
+			Stats();
 		}
 	}
 	else
@@ -232,11 +249,11 @@ void Player::Look(const vector<string>& args) const
 	}
 }
 
-void Player::Stats(const vector<string>& args) const
+void Player::Stats() const
 {
 	int lifePercent = hp * 100 / maxHp;
 
-	cout << "You are level " << lvl << endl;
+	//cout << "You are level " << lvl << endl;
 
 	if (lifePercent > 75)
 	{
@@ -253,6 +270,10 @@ void Player::Stats(const vector<string>& args) const
 
 	cout << "you have " << hp << "/" << maxHp << " hit points" << endl;
 	cout << "You have " << mana << " mana points" << endl;
+	if (shield > 0)
+	{
+		cout << "You have a shield of " << shield << " seconds.\n";
+	}
 }
 
 void Player::Inventory(const vector<string>& args) const

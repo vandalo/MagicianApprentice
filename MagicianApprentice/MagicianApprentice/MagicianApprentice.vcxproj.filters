@@ -78,6 +78,9 @@
     <ClCompile Include="Fireplace.cpp">
       <Filter>Usable</Filter>
     </ClCompile>
+    <ClCompile Include="Tortolize.cpp">
+      <Filter>Spells</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Fireplace.h">
       <Filter>Usable</Filter>
+    </ClInclude>
+    <ClInclude Include="Tortolize.h">
+      <Filter>Spells</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

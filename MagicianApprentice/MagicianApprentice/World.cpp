@@ -15,6 +15,7 @@
 #include "Stair.h"
 #include "Bottle.h"
 #include "Fireplace.h"
+#include "Tortolize.h"
 
 World::World()
 {}
@@ -65,7 +66,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (Same(args[0], "stats"))
 		{
-			player->Stats(args);
+			player->Stats();
 		}
 		else if (Same(args[0], "go"))
 		{
@@ -85,7 +86,7 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			cout << "You must say what you want to take.\n";
 		}
-		else if (Same(args[0], "ignite") || Same(args[0], "exura"))
+		else if (Same(args[0], "ignite") || Same(args[0], "exura") || Same(args[0], "tortolize"))
 		{
 			player->UseSpell(args);
 		}
@@ -183,7 +184,8 @@ bool World::Init() {
 	entities.push_back(neverAcces);
 	//Player creation
 	string name = Introduction().c_str();
-	player = new Player(name.c_str(), "You are a magician apprentice", kitchen, this);
+	player = new Player(name.c_str(), "You are a magician apprentice", library, this);
+	entities.push_back(player);
 
 	//Items from player since start
 	Item *document = new Item("Document", "Mission:\nYou blabla", player, nullptr, false);
@@ -282,7 +284,7 @@ void World::CreateBookpage3()
 		}
 	}
 		
-	Ignite* sbPage3 = new Ignite("Bookpage3", "Tortolize: This spell will give you a shiled of 120 seconds of energy.\nAll the damage you recieve will decreace the shield time.", library, spellbook, 10, 60, "tortolize");
+	Tortolize* sbPage3 = new Tortolize("Bookpage3", "Tortolize: This spell will give you a shiled of 120 seconds of energy.\nAll the damage you recieve will decreace the shield time.", library, spellbook, 10, 60, "tortolize");
 	entities.push_back(sbPage3);
 }
 
