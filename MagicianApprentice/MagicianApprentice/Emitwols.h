@@ -12,10 +12,6 @@ class Emitwols : public Spell
 public:
 	Emitwols(const char* name, const char* description, Entity* parent, Entity* must, int mana, int cd, const char* nameSpell);
 	void effect(Player* player);
-
-
-private:
-
 };
 
 #endif

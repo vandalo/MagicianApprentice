@@ -58,17 +58,22 @@ bool World::GameLoop()
 	return ret;
 }
 
-bool World::Win()
+bool World::Win() const
 {
-	bool find = false;
-	for (list<Entity*>::const_iterator it = player->container.begin(); it != player->container.cend() && find == false; ++it)
+	bool win = false;
+	for (list<Entity*>::const_iterator it = player->container.begin(); it != player->container.cend() && win == false; ++it)
 	{
 		if (Same((*it)->name, "DragonGem"))
 		{
-			find = true;
+			win = true;
 		}
 	}
-	return find;
+	return win;
+}
+
+bool World::PlayerIsAlive() const
+{
+	return player->IsAlive();
 }
 
 bool World::ParseCommand(vector<string>& args)
@@ -150,11 +155,7 @@ bool World::ParseCommand(vector<string>& args)
 	return ret;
 }
 
-bool World::PlayerIsAlive() {
-	return player->IsAlive();
-}
-
-string World::Introduction()
+string World::Introduction() const
 {
 	cout << "Welcome dear... Oh, wait... Can you remember your name\?\n";
 	cout << "> ";
@@ -167,7 +168,7 @@ string World::Introduction()
 	cout << "have to face a real case.\n\n";
 	cout << "Every day the magic council receives many letter from people asking for help with many\n";
 	cout << "things and the organisation of this exam chose one for each studden who have to do the\n";
-	cout << "exam, so remember, we don’t know what you will have to face.\n\n";
+	cout << "exam, so remember, we don\'t know what you will have to face.\n\n";
 	cout << "You have the explanation of your mission with you in the document apart, from the spellbook\n";
 	cout << "you have used during all this years at school. Good luck!\n\n";
 
@@ -186,7 +187,7 @@ bool World::Init() {
 	Room *kitchen = new Room("Kitchen", "This is the kitchen of the castle. It is plenty of cooking items.");
 	Room *firstfloor = new Room("First floor", "You see a huge room.");
 	Room *library = new Room("The library", "You are at the castle\'s library. The ceiling is very high.\nYou can see an enormous number of books. There is an stair to arrive to the books at the top of the shelfs.");
-	Room *room = new Room("Room", "You are at the castle’s main room. It\'s plenty of spider silks.");
+	Room *room = new Room("Room", "You are at the castle\'s main room. It\'s plenty of spider silks.");
 	Room *dungeon = new Room("Dungeon", "You are at the dungeon. There is a lot of darkness and it\'s hard to see arrownd.");
 	Room *secretPasage = new Room("Secret pasage", "You are in a secret pasage!\nThe walls have torchs which guide you.");
 	Room *hiddenRoom = new Room("Hidden room", "You are in the secret office from the castle\'s owner.\nIt\'s georgious! Plenty of decoration, books and an awesome table.");

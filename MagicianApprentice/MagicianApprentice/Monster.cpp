@@ -10,31 +10,14 @@ Monster::Monster(const char* name, const char* description, Entity* parent) :
 	Creature(name, description, parent)
 {
 	type = MONSTER;
-
-	hp = 50;
-	maxHp = 50;
-	mana = 100;
-	lvl = 1;
-
+	hp = 0;
+	maxHp = 0;
+	mana = 0;
+	lvl = 0;
 }
 
 Monster::~Monster()
 {}
-
-int Monster::GetHp()
-{
-	return hp;
-}
-
-int Monster::GetMaxHp()
-{
-	return maxHp;
-}
-
-bool Monster::Atack()
-{
-	return true;
-}
 
 unsigned int Monster::ReciveAtack(unsigned int damage)
 {
@@ -42,14 +25,9 @@ unsigned int Monster::ReciveAtack(unsigned int damage)
 	return damage;
 }
 
-Room* Monster::GetRoom() const
-{
-	return (Room*)parent;
-}
-
 void Monster::Look() const
 {
-	if(hp > 0)
+	if (hp > 0)
 	{
 		cout << "You see an " << name << ".\n";
 	}
@@ -57,34 +35,18 @@ void Monster::Look() const
 	{
 		cout << "You see a defeated " << name << ".\n";
 	}
-	
+
 	cout << description << "\n";
 	cout << information << "\n";
 	Stats();
 }
 
-void Monster::Stats() const
+bool Monster::Update()
 {
-	int lifePercent = hp * 100 / maxHp;
-
-	//cout << "You are level " << lvl << endl;
-
-	if (lifePercent > 75)
+	bool ret = false;
+	if (IsAlive())
 	{
-		cout << name << " is healthy, ";
+		ret = Atack();
 	}
-	else if (lifePercent > 25)
-	{
-		cout << name << " is hurt, ";
-	}
-	else if(lifePercent > 0)
-	{
-		cout << name << " is almost death, ";
-	}
-	else
-	{
-		cout << name << " is death, ";
-	}
-
-	cout << name << " have " << hp << "/" << maxHp << " hit points" << endl;
+	return ret;
 }

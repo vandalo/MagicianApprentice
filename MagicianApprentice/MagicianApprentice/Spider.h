@@ -13,14 +13,7 @@ class Spider : public Monster
 public:
 	Spider(const char* name, const char* description, Entity* parent);
 	~Spider();
-
-	Room* GetRoom() const;
-	int GetHp();
-	int GetMaxHp();
 	bool Atack();
-	bool Update();
-
-private:
 };
 
 #endif

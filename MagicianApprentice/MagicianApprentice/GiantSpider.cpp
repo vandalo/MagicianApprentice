@@ -25,16 +25,6 @@ GiantSpider::GiantSpider(const char* name, const char* description, Entity* pare
 GiantSpider::~GiantSpider()
 {}
 
-int GiantSpider::GetHp()
-{
-	return hp;
-}
-
-int GiantSpider::GetMaxHp()
-{
-	return maxHp;
-}
-
 bool GiantSpider::Atack()
 {
 	bool ret = false;
@@ -58,19 +48,4 @@ bool GiantSpider::Atack()
 		cooldown1--;
 	}
 	return ret;
-}
-
-bool GiantSpider::Update()
-{
-	bool ret = false;
-	if (IsAlive())
-	{
-		ret = Atack();
-	}
-	return ret;
-}
-
-Room* GiantSpider::GetRoom() const
-{
-	return (Room*)parent;
 }

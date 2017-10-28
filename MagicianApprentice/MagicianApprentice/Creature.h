@@ -14,13 +14,13 @@ public:
 	Creature(const char* name, const char* description, Entity* parent);
 	~Creature();
 
-	void Look() const;
-	void Stats() const;
-	Room* GetRoom() const;
-	int GetHp();
-	int GetMaxHp();
-	bool Atack();
-	bool IsAlive();
+	virtual void Look() const;
+	virtual void Stats() const;
+	virtual Room* GetRoom() const;
+	virtual int GetHp() const;
+	virtual int GetMaxHp() const;
+	virtual bool Atack();
+	virtual bool IsAlive() const;
 
 public:
 	unsigned int lvl = 0;

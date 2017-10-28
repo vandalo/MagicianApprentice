@@ -16,7 +16,6 @@ Dragon::Dragon(const char* name, const char* description, Entity* parent) :
 	maxHp = 50;
 	mana = 0;
 	lvl = 1;
-	
 	information = "The Dragon atacks every 3 seconds using a normal attack and he send a giant fireball every 15 seconds.\n";
 	attack1 = 5;
 	maxCooldown1 = 3;
@@ -28,16 +27,6 @@ Dragon::Dragon(const char* name, const char* description, Entity* parent) :
 
 Dragon::~Dragon()
 {}
-
-int Dragon::GetHp()
-{
-	return hp;
-}
-
-int Dragon::GetMaxHp()
-{
-	return maxHp;
-}
 
 bool Dragon::Atack()
 {
@@ -82,19 +71,4 @@ bool Dragon::Atack()
 		cooldown2--;
 	}
 	return ret;
-}
-
-bool Dragon::Update()
-{
-	bool ret = false;
-	if (IsAlive())
-	{
-		ret = Atack();
-	}
-	return ret;
-}
-
-Room* Dragon::GetRoom() const
-{
-	return (Room*)parent;
 }

@@ -19,20 +19,19 @@ public:
 
 	void Look(const vector<string>& args) const;
 	void Stats() const;
+	void Inventory(const vector<string>& args) const;
+
 	void Go(const vector<string>& args);
 	void Take(const vector<string>& args);
-	Room* GetRoom() const;
-	void Inventory(const vector<string>& args) const;
-	void Open(const vector<string>& args);
-	int GetHp();
-	int GetMaxHp();
-	bool Atack();
-	unsigned int ReciveAtack(unsigned int damage);
-	void UseSpell(const vector<string>& args);
+	
 	bool Update() override;
 	void UpdateMana(int mana);
 	void UpdateHp(int hp);
 	void UpdateShield(int shieldPoints);
+
+	void Open(const vector<string>& args);
+	unsigned int ReciveAtack(unsigned int damage);
+	void UseSpell(const vector<string>& args);
 	void Use(const vector<string>& args);
 	void UseOn(const vector<string>& args);
 
@@ -41,7 +40,7 @@ public:
 	void CreateSecretExit() const;
 
 private:
-	Spell* HaveSpellAndMana(const vector<string>& args);
+	Spell* HaveSpellAndMana(const vector<string>& args) const;
 
 private:
 	unsigned int shield = 0;

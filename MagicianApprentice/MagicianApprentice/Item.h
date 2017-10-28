@@ -14,11 +14,10 @@ public:
 	~Item();
 	virtual void Look() const;
 	virtual void Use(Player* player, const vector<string>& args);
-	//bool Update();
 
 public:
-	bool fixed;
-	Entity* must;	//This entity is a must that player need to collect the item.
+	bool fixed = false;
+	Entity* must = nullptr;	//This entity is a must that player need to collect the item.
 
 
 private:

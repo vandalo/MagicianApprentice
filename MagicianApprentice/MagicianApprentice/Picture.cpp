@@ -19,8 +19,3 @@ void Picture::Use(Player * player, const vector<string>& args)
 		player->CreateSecretExit();
 	}
 }
-
-void Picture::Look() const {
-	cout << name << ".\n";
-	cout << description;
-}

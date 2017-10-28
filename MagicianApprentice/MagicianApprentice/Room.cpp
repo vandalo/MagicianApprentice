@@ -41,13 +41,18 @@ void Room::Look() const
 		else if ((*it)->type == MONSTER)
 		{
 			Monster* monster = (Monster*)*it;
-			cout << "You can see a " << monster->name.c_str() << ".\n";
+			cout << "You can see a ";
+			if (monster->IsAlive() == false)
+			{
+				cout << "death ";
+			}
+			cout << monster->name.c_str() << ".\n";
 		}
 	}
 
 }
 
-Exit * Room::GetExitByName(const string exit_name)
+Exit * Room::GetExitByName(const string exit_name) const
 {
 	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 	{

@@ -16,9 +16,6 @@ public:
 
 public:
 	bool used;
-
-private:
-
 };
 
 #endif

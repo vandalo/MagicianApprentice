@@ -20,22 +20,25 @@ public:
 
 	bool Init();
 	bool ReadComand(vector<string>& args);
-	bool ParseCommand(vector<string>& args);
 	bool GameLoop();
-	bool PlayerIsAlive();
+	bool Win() const;
+	bool PlayerIsAlive() const;
+	bool ParseCommand(vector<string>& args);
+
+
 	void CreateBookpage3();
 	void CreateKey1();
 	void CreateSecretExit();
-	bool Win();
+	
 
 private:
-	string Introduction();
+	string Introduction() const;
 private:
 
 	int i = 0;
 	list<Entity*> entities;
 	Player* player = nullptr;
-	clock_t timer;
+	clock_t timer = 0;
 };
 
 #endif 

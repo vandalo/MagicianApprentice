@@ -12,8 +12,8 @@ class Fireplace : public Item
 
 public:
 	Fireplace(const char* name, const char* description, Entity* parent, Entity* must, bool fix, bool isOn);
+	virtual void Look() const override;
 	void Use(Player* player, const vector<string>& args);
-	void Look() const;
 
 public:
 	bool used;

@@ -13,14 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Creatures">
-      <UniqueIdentifier>{e605367f-136f-4d5c-aa4d-bea8332bc38b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Spells">
       <UniqueIdentifier>{a88f917c-0906-44d0-a2c8-24ef494ca0da}</UniqueIdentifier>
     </Filter>
     <Filter Include="Usable">
       <UniqueIdentifier>{7b007fa4-b3cb-4997-85bf-26c48af8c86b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monsters">
+      <UniqueIdentifier>{e605367f-136f-4d5c-aa4d-bea8332bc38b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +55,7 @@
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Spider.cpp">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClCompile>
     <ClCompile Include="Spell.cpp">
       <Filter>Spells</Filter>
@@ -82,13 +82,13 @@
       <Filter>Spells</Filter>
     </ClCompile>
     <ClCompile Include="GiantSpider.cpp">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClCompile>
     <ClCompile Include="Emitwols.cpp">
       <Filter>Spells</Filter>
     </ClCompile>
     <ClCompile Include="Dragon.cpp">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClCompile>
     <ClCompile Include="Picture.cpp">
       <Filter>Usable</Filter>
@@ -126,7 +126,7 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Spider.h">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClInclude>
     <ClInclude Include="Spell.h">
       <Filter>Spells</Filter>
@@ -153,13 +153,13 @@
       <Filter>Spells</Filter>
     </ClInclude>
     <ClInclude Include="GiantSpider.h">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClInclude>
     <ClInclude Include="Emitwols.h">
       <Filter>Spells</Filter>
     </ClInclude>
     <ClInclude Include="Dragon.h">
-      <Filter>Creatures</Filter>
+      <Filter>Monsters</Filter>
     </ClInclude>
     <ClInclude Include="Picture.h">
       <Filter>Usable</Filter>

@@ -11,7 +11,6 @@ Spider::Spider(const char* name, const char* description, Entity* parent) :
 	Monster(name, description, parent)
 {
 	type = MONSTER;
-
 	hp = 10;
 	maxHp = 10;
 	mana = 0;
@@ -24,16 +23,6 @@ Spider::Spider(const char* name, const char* description, Entity* parent) :
 
 Spider::~Spider()
 {}
-
-int Spider::GetHp()
-{
-	return hp;
-}
-
-int Spider::GetMaxHp()
-{
-	return maxHp;
-}
 
 bool Spider::Atack()
 {
@@ -61,19 +50,4 @@ bool Spider::Atack()
 		cooldown1--;
 	}
 	return ret;
-}	
-
-bool Spider::Update()
-{
-	bool ret = false;
-	if (IsAlive())
-	{
-		ret = Atack();
-	}
-	return ret;
-}
-
-Room* Spider::GetRoom() const
-{
-	return (Room*)parent;
 }

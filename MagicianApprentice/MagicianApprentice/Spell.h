@@ -14,15 +14,15 @@ class Spell : public Item
 public:
 	Spell(const char* name, const char* description, Entity* parent, Entity* must, int mana, int cd, const char* nameSpell);
 	~Spell();
-	void Look() const;
+	virtual void Look() const;
 	virtual void effect(Player* player) = 0;
-	bool Update();
+	virtual bool Update();
 
 public:
-	const char* nameSpell;
-	unsigned int mana;
-	unsigned int cd;
-	unsigned int cdTime;
+	const char* nameSpell = nullptr;
+	unsigned int mana = 0;
+	unsigned int cd = 0;
+	unsigned int cdTime = 0;
 
 private:
 

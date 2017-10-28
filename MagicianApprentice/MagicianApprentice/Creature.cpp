@@ -10,23 +10,21 @@ Creature::Creature(const char* name, const char* description, Entity* parent) :
 	Entity(name, description, parent)
 {
 	type = CREATURE;
-
-	hp = 50;
-	maxHp = 50;
-	mana = 100;
-	lvl = 1;
-
+	hp = 0;
+	maxHp = 0;
+	mana = 0;
+	lvl = 0;
 }
 
 Creature::~Creature()
 {}
 
-int Creature::GetHp()
+int Creature::GetHp() const
 {
 	return hp;
 }
 
-int Creature::GetMaxHp()
+int Creature::GetMaxHp() const
 {
 	return maxHp;
 }
@@ -36,7 +34,7 @@ bool Creature::Atack()
 	return true;
 }
 
-bool Creature::IsAlive()
+bool Creature::IsAlive() const
 {
 	return hp > 0;
 }
@@ -61,17 +59,20 @@ void Creature::Stats() const
 
 	if (lifePercent > 75)
 	{
-		cout << name << "is healthy, ";
+		cout << name << " is healthy, ";
 	}
 	else if (lifePercent > 25)
 	{
-		cout << name << "is hurt, ";
+		cout << name << " is hurt, ";
+	}
+	else if (lifePercent > 0)
+	{
+		cout << name << " is almost death, ";
 	}
 	else
 	{
-		cout << name << "is almost death, ";
+		cout << name << " is death, ";
 	}
 
 	cout << name << " have " << hp << "/" << maxHp << " hit points" << endl;
-	cout << name << " have " << mana << " mana points" << endl;
 }

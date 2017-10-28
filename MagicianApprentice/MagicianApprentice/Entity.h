@@ -28,7 +28,7 @@ public:
 	virtual void ChangeParentTo(Entity* new_parent);
 	virtual bool Update();
 	virtual void FindByTypeAndPropietary(EntityType type, list<Entity*>&entity_list, const Entity* propietari) const;
-	virtual Entity* GetItemByName(const string item_name);
+	virtual Entity* GetItemByName(const string item_name) const;
 
 public:
 	EntityType type;

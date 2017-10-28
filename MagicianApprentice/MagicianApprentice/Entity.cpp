@@ -17,7 +17,6 @@ Entity::~Entity()
 
 void Entity::Look() const
 {
-	//cout << S_BOLD << name << E_BOLD << "\n";
 	cout << description << "\n";
 }
 
@@ -58,7 +57,7 @@ void Entity::FindByTypeAndPropietary(EntityType type, list<Entity*>& entity_list
 	}
 }
 
-Entity * Entity::GetItemByName(const string item_name)
+Entity * Entity::GetItemByName(const string item_name) const
 {
 	for (list<Entity*>::const_iterator it = container.begin(); it != container.cend(); ++it)
 	{

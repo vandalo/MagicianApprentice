@@ -13,7 +13,6 @@ Player::Player(const char* name, const char* description, Entity* parent, World*
 	Creature(name, description, parent), myWorld(myWorld)
 {
 	type = PLAYER;
-	
 	hp = 50;
 	maxHp = 50;
 	mana = 100;
@@ -24,27 +23,12 @@ Player::Player(const char* name, const char* description, Entity* parent, World*
 Player::~Player()
 {}
 
-int Player::GetHp()
-{
-	return hp;
-}
-
-int Player::GetMaxHp()
-{
-	return maxHp;
-}
-
 bool Player::Update() {
 	if (shield > 0)
 	{
 		shield--;
 	}
 	return false;
-}
-
-bool Player::Atack()
-{
-	return true;
 }
 
 unsigned int Player::ReciveAtack(unsigned int damage)
@@ -164,22 +148,7 @@ void Player::UseOn(const vector<string>& args)
 	}
 }
 
-void Player::CreateBookpage3() const
-{
-	myWorld->CreateBookpage3();
-}
-
-void Player::CreateKey1() const
-{
-	myWorld->CreateKey1();
-}
-
-void Player::CreateSecretExit() const
-{
-	myWorld->CreateSecretExit();
-}
-
-Spell * Player::HaveSpellAndMana(const vector<string>& args)
+Spell * Player::HaveSpellAndMana(const vector<string>& args) const
 {
 	bool haveSpell = false;
 	Spell* ret = nullptr;
@@ -226,11 +195,6 @@ Spell * Player::HaveSpellAndMana(const vector<string>& args)
 		cout << "You don\'t know this spell yet!\n";
 	}
 	return ret;
-}
-
-Room* Player::GetRoom() const
-{
-	return (Room*)parent;
 }
 
 void Player::Look(const vector<string>& args) const
@@ -438,4 +402,19 @@ void Player::Take(const vector<string>& args)
 			}
 		}
 	}
+}
+
+void Player::CreateBookpage3() const
+{
+	myWorld->CreateBookpage3();
+}
+
+void Player::CreateKey1() const
+{
+	myWorld->CreateKey1();
+}
+
+void Player::CreateSecretExit() const
+{
+	myWorld->CreateSecretExit();
 }

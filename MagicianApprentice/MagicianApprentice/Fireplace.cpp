@@ -10,6 +10,24 @@ Fireplace::Fireplace(const char* name, const char* description, Entity* parent, 
 	used = false;
 }
 
+void Fireplace::Look() const {
+	cout << name;
+	if (name.length() > 0)
+	{
+		cout << "\n";
+	}
+	cout << description;
+	if (isOn)
+	{
+		cout << " with a combination of orange, red and blue flames.\n";
+	}
+	else
+	{
+		cout << " plenty of ashes.\n";
+	}
+
+}
+
 void Fireplace::Use(Player * player, const vector<string>& args)
 {
 	if (used == false)
@@ -25,8 +43,6 @@ void Fireplace::Use(Player * player, const vector<string>& args)
 			}
 			if (find == false && (*it)->container.size() > 0)
 			{
-				//list<Entity*> itemsInside;
-				//FindByTypeAndPropietary(ITEM, itemsInside, (*it));
 				for (list<Entity*>::const_iterator itInside = (*it)->container.begin(); itInside != (*it)->container.cend() && find == false; ++itInside)
 				{
 					if (Same((*itInside)->name, args[1]))
@@ -59,20 +75,3 @@ void Fireplace::Use(Player * player, const vector<string>& args)
 	}
 }
 
-void Fireplace::Look() const {
-	cout << name;
-	if (name.length() > 0)
-	{
-		cout << "\n";
-	}
-	cout << description;
-	if (isOn)
-	{
-		cout << " with a combination of orange, red and blue flames.\n";
-	}
-	else
-	{
-		cout << " plenty of ashes.\n";
-	}
-
-}

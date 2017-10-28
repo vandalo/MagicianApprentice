@@ -117,5 +117,4 @@ void Exit::Open(Player* playerIn)
 			cout << "You can\'t open the " << name << ".\n";
 		}
 	}
-	
 }
