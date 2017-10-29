@@ -229,7 +229,7 @@ bool World::Init() {
 	Item *spellbook = new Item("Spellbook", "This is your spellbook, it contains all the spells you know.", player, nullptr, false);
 	Item *doorSign = new Item("Sign", "Only the helthy people can enter the castle!", door, nullptr, true);
 	Item *table = new Item("Table", "You can see a table in the middle of the library!", library, nullptr, true);
-	Item *kitchenTable = new Item("Table", "This table is full of coocking items.", kitchen, nullptr, true);
+	Item *kitchenTable = new Item("Table", "This table is full of cooking items.", kitchen, nullptr, true);
 	Item *ink = new Item("Ink", "You can see a pot of black ink. The pot have the draw of a dragon", table, nullptr, true);
 	Item *lamp = new Item("Lamp", "You can see a lamp. It\'s very old it should not work.", table, nullptr, true);
 	Item *stick = new Item("Stick", "You can see a Stick. This stick should be able to break any chain.", room, giantSpiderRoom, false);
